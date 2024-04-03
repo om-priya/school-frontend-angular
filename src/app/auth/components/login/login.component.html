@@ -1,0 +1,14 @@
+<form (ngSubmit)="checkCredentials(f)" #f="ngForm">
+  <div class="input-container">
+    <label for="user_name">Enter Your UserName:</label>
+    <input type="text" name="user_name" id="user_name" ngModel />
+  </div>
+  <div class="input-container">
+    <label for="password">Enter Your Password:</label>
+    <input type="password" name="password" id="password" ngModel />
+  </div>
+  <div class="button-container">
+    <button pButton pRipple label="Login" class="p-button-success"></button>
+    <p-button label="SignUp" (click)="navigateToSignUp()"></p-button>
+  </div>
+</form>

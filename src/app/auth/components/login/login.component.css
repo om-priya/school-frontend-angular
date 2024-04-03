@@ -1,0 +1,30 @@
+form {
+    /* background-image: url(https://media.istockphoto.com/id/1403062445/photo/dark-wall-room-studio-background.jpg?s=612x612&w=0&k=20&c=QvD_gbbmjfA4YVgzoIk9unn1ekmCcU3SthHJbGtaSDQ=); */
+    min-width: 50vw;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3vh;
+  }
+  /* label {
+    color: white;
+  } */
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1vh;
+  }
+  input {
+    padding: 0.5rem;
+    border-radius: 12px;
+    width: 40vw;
+  }
+  .button-container {
+    display: flex;
+    gap: 4vw;
+  }
+  

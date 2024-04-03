@@ -1,0 +1,26 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <img
+      src="https://primefaces.org/cdn/primeng/images/primeng.svg"
+      height="40"
+    />
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div *ngIf="!isLoggedIn; else logoutButton">
+      <button
+        pButton
+        pRipple
+        label="Login/SignUp"
+        class="p-button-success"
+        (click)="redirectToLogin()"
+      ></button>
+    </div>
+    <ng-template #logoutButton>
+      <p-button label="Logout" severity="danger"></p-button>
+    </ng-template>
+  </ng-template>
+</p-menubar>
+
+<div *ngIf="isLoggedIn">
+  <school-sub-navbar></school-sub-navbar>
+</div>
