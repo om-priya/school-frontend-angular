@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { EventsService, eventData } from '../../services/event.service';
 import { JWTService } from '../../../services/jwtservice.service';
 import { SessionStorageService } from '../../../services/session-storage-service.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'school-events-list',
@@ -18,7 +19,8 @@ export class EventsListComponent implements OnInit, OnDestroy {
   constructor(
     private eventService: EventsService,
     private jwtService: JWTService,
-    private storageService: SessionStorageService
+    private storageService: SessionStorageService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -29,11 +31,18 @@ export class EventsListComponent implements OnInit, OnDestroy {
   }
 
   fetchEvents() {
-    this.fetchEventDataSubscriber = this.eventService
-      .getEvents()
-      .subscribe((responseData) => {
+    this.fetchEventDataSubscriber = this.eventService.getEvents().subscribe({
+      next: (responseData) => {
         this.eventsData = responseData.data.json;
-      });
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error,
+        });
+      },
+    });
   }
 
   showDialog() {

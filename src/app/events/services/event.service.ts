@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginSuccessResponse } from '../../models/response.model';
+import { SuccessResponse } from '../../models/response.model';
 import { SessionStorageService } from '../../services/session-storage-service.service';
+import { catchError } from 'rxjs';
+import { HandleErrorService } from '../../services/handle-error.service';
 
 export type eventData = {
   notice_id: string;
@@ -12,33 +14,35 @@ export type eventData = {
 export class EventsService {
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService
+    private storageService: SessionStorageService,
+    private errorHandlerService: HandleErrorService
   ) {}
 
   getEvents() {
-    return this.http.get<LoginSuccessResponse<eventData>>(
-      'http://localhost:5000/api/v1/events',
-      {
+    return this.http
+      .get<SuccessResponse<eventData>>('http://localhost:5000/api/v1/events', {
         headers: new HttpHeaders({
           Authorization: `Bearer ${this.storageService.getFromSessionStorage(
             'jwt'
           )}`,
         }),
-      }
-    );
+      })
+      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
-  
-  createEvent(eventDetails: {event_message: string}) {
-    return this.http.post<LoginSuccessResponse<void>>(
-      'http://localhost:5000/api/v1/events',
-      eventDetails,
-      {
-        headers: new HttpHeaders({
-          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-            'jwt'
-          )}`,
-        }),
-      }
-    );
+
+  createEvent(eventDetails: { event_message: string }) {
+    return this.http
+      .post<SuccessResponse<void>>(
+        'http://localhost:5000/api/v1/events',
+        eventDetails,
+        {
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
+              'jwt'
+            )}`,
+          }),
+        }
+      )
+      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 }

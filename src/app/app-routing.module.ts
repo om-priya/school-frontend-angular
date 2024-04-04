@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'not-found', component: NotFoundComponent },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
@@ -39,6 +41,10 @@ const routes: Routes = [
     path: 'teachers',
     loadChildren: () =>
       import('./teacher/teacher.module').then((m) => m.TeacherModule),
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
   },
 ];
 

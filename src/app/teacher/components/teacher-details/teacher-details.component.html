@@ -1,51 +1,44 @@
 <div class="center">
-    <div class="card flex justify-content-center">
-      <p-card
-        [header]="teacherData.name"
-        [subheader]="teacherData.email"
-        [style]="{ width: '500px' }"
-      >
-        <ng-template pTemplate="header">
-          <img
-            alt="Card"
-            src="https://primefaces.org/cdn/primeng/images/usercard.png"
-          />
-        </ng-template>
-        <!-- <p>
+  <div class="card flex justify-content-center">
+    <p-card
+      [header]="teacherData.name"
+      [subheader]="teacherData.email"
+      [style]="{ width: '500px' }"
+    >
+      <ng-template pTemplate="header">
+        <img
+          alt="Card"
+          src="https://primefaces.org/cdn/primeng/images/usercard.png"
+        />
+      </ng-template>
+      <!-- <p>
           <span class="header">Gender:</span
           >{{ teacherData.gender === "m" ? "Male" : "Female" }}
         </p> -->
-        <p><span class="header">Status:</span> {{ teacherData.status }}</p>
-        <p><span class="header">User ID:</span> {{ teacherData.user_id }}</p>
-        <ng-template pTemplate="footer" *ngIf="teacherData.status === 'active'">
-          <p-button
-            label="Update"
-            severity="primary"
-          ></p-button>
-          <p-button
-            label="Delete"
-            styleClass="p-button-secondary"
-            severity="danger"
-            [style]="{ 'margin-left': '.5em' }"
-          ></p-button>
-          <p-button
-            label="Give Feedback"
-            styleClass="p-button-secondary"
-            severity=""
-            [style]="{ 'margin-left': '.5em' }"
-          ></p-button>
-        </ng-template>
-        <ng-template
-          pTemplate="footer"
-          *ngIf="teacherData.status === 'pending'"
-        >
-          <p-button
-            label="Approve User"
-            icon="pi pi-check"
-            severity="success"
-          ></p-button>
-        </ng-template>
-      </p-card>
-    </div>
+      <p><span class="header">Status:</span> {{ teacherData.status }}</p>
+      <p><span class="header">User ID:</span> {{ teacherData.user_id }}</p>
+      <ng-template pTemplate="footer" *ngIf="teacherData.status === 'active'">
+        <p-button label="Update" severity="primary"></p-button>
+        <p-button
+          label="Delete"
+          styleClass="p-button-secondary"
+          severity="error"
+          [style]="{ 'margin-left': '.5em' }"
+        ></p-button>
+        <p-button
+          label="Give Feedback"
+          styleClass="p-button-secondary"
+          severity=""
+          [style]="{ 'margin-left': '.5em' }"
+        ></p-button>
+      </ng-template>
+      <ng-template pTemplate="footer" *ngIf="teacherData.status === 'pending'">
+        <p-button
+          label="Approve User"
+          icon="pi pi-check"
+          severity="success"
+        ></p-button>
+      </ng-template>
+    </p-card>
   </div>
-  
+</div>

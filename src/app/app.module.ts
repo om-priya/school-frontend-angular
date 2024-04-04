@@ -12,19 +12,19 @@ import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { SubNavbarComponent } from './components/navbar/sub-navbar/sub-navbar.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    FooterComponent,
     SubNavbarComponent,
     AboutComponent,
     HomeComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ButtonModule,
     SplitterModule,
     BrowserAnimationsModule,
+    ToastModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

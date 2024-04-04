@@ -18,7 +18,11 @@
     <ng-template #logoutButton>
       <div class="profile-container">
         <i class="pi pi-user" style="font-size: 1.5rem"></i>
-        <p-button label="Logout" severity="danger" (click)="logoutMe()"></p-button>
+        <p-button
+          label="Logout"
+          severity="error"
+          (click)="logoutMe()"
+        ></p-button>
       </div>
     </ng-template>
   </ng-template>

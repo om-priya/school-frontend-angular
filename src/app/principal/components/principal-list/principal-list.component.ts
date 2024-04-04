@@ -5,6 +5,7 @@ import {
   principalData,
 } from '../../services/principal.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'school-principal-list',
@@ -17,22 +18,31 @@ export class PrincipalListComponent implements OnInit, OnDestroy {
 
   constructor(
     private principalService: PrincipalService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.fetchAllPrincipalsSubscriber = this.principalService
       .getAllPrincipals()
-      .subscribe((responseData) => {
-        console.log(responseData);
-        this.principalsData = responseData.data.json;
+      .subscribe({
+        next: (responseData) => {
+          this.principalsData = responseData.data.json;
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error,
+          });
+        },
       });
   }
 
   getSeverity(status: string) {
     switch (status) {
       case 'pending':
-        return 'danger';
+        return 'error';
       case 'approved':
         return 'success';
       default:

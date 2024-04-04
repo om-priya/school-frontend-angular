@@ -6,8 +6,14 @@ import { AuthRouteModule } from './auth-routing.module';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 
+
 @NgModule({
   declarations: [LoginComponent, SignupComponent],
-  imports: [CommonModule, AuthRouteModule, FormsModule, ButtonModule],
+  imports: [
+    CommonModule,
+    AuthRouteModule,
+    FormsModule,
+    ButtonModule,
+  ],
 })
 export class AuthModule {}

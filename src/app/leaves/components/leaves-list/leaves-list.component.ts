@@ -3,6 +3,7 @@ import { LeaveService, leave_data } from '../../services/leave.service';
 import { Subscription } from 'rxjs';
 import { JWTService } from '../../../services/jwtservice.service';
 import { SessionStorageService } from '../../../services/session-storage-service.service';
+import { MessageService } from 'primeng/api';
 
 interface Column {
   field: string;
@@ -25,7 +26,8 @@ export class LeavesListComponent implements OnInit, OnDestroy {
   constructor(
     private leaveService: LeaveService,
     private jwtService: JWTService,
-    private storageService: SessionStorageService
+    private storageService: SessionStorageService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +45,7 @@ export class LeavesListComponent implements OnInit, OnDestroy {
   getSeverity(status: string) {
     switch (status) {
       case 'pending':
-        return 'danger';
+        return 'error';
       case 'approved':
         return 'success';
       default:
@@ -51,21 +53,39 @@ export class LeavesListComponent implements OnInit, OnDestroy {
     }
   }
   fetchLeavesData() {
-    this.fetchLeaveSubscriber = this.leaveService
-      .getLeaves()
-      .subscribe((responseData) => {
+    this.fetchLeaveSubscriber = this.leaveService.getLeaves().subscribe({
+      next: (responseData) => {
         this.leavesData = responseData.data.json;
-        console.log(responseData.data.json);
-      });
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: error,
+        });
+      },
+    });
   }
 
   approveLeave(leaveId: string) {
-    console.log(leaveId);
     this.approveLeaveSubscriber = this.leaveService
       .updateLeaveStatus(leaveId)
-      .subscribe((responseData) => {
-        console.log(responseData);
-        this.fetchLeavesData();
+      .subscribe({
+        next: (responseData) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: responseData.message,
+          });
+          this.fetchLeavesData();
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error,
+          });
+        },
       });
   }
 

@@ -6,6 +6,7 @@ import {
 } from '../../services/principal.service';
 import { Subscription } from 'rxjs';
 import { VariableBinding } from '@angular/compiler';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'school-principal-details',
@@ -18,17 +19,25 @@ export class PrincipalDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private principalService: PrincipalService
+    private principalService: PrincipalService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     const principal_id = this.route.snapshot.params['id'];
     this.fetchSingleRouteSubscriber = this.principalService
       .getSinglePrincipals(principal_id)
-      .subscribe((responseData) => {
-        console.log(responseData);
-        this.principalData = responseData.data.json[0];
-        console.log(this.principalData);
+      .subscribe({
+        next: (responseData) => {
+          this.principalData = responseData.data.json[0];
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error,
+          });
+        },
       });
   }
 

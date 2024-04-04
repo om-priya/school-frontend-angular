@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TeacherService, teacherData } from '../../services/teacher.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'school-teacher-list',
@@ -12,20 +13,33 @@ export class TeacherListComponent implements OnInit, OnDestroy {
   fetchAllTeachersSubscriber!: Subscription;
   teachersData!: teacherData[];
 
-  constructor(private teacherService: TeacherService, private router: Router) {}
+  constructor(
+    private teacherService: TeacherService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.fetchAllTeachersSubscriber = this.teacherService
       .getAllTeachers()
-      .subscribe((responseData) => {
-        this.teachersData = responseData.data.json;
+      .subscribe({
+        next: (responseData) => {
+          this.teachersData = responseData.data.json;
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error,
+          });
+        },
       });
   }
 
   getSeverity(status: string) {
     switch (status) {
       case 'pending':
-        return 'danger';
+        return 'error';
       case 'approved':
         return 'success';
       default:

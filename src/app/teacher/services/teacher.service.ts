@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginSuccessResponse } from '../../models/response.model';
+import { SuccessResponse } from '../../models/response.model';
 import { SessionStorageService } from '../../services/session-storage-service.service';
+import { catchError } from 'rxjs';
+import { HandleErrorService } from '../../services/handle-error.service';
 
 export type teacherData = {
   email: string;
@@ -17,31 +19,36 @@ export type teacherData = {
 export class TeacherService {
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService
+    private storageService: SessionStorageService,
+    private errorHandlerService: HandleErrorService
   ) {}
 
   getAllTeachers() {
-    return this.http.get<LoginSuccessResponse<teacherData>>(
-      'http://localhost:5000/api/v1/teachers',
-      {
-        headers: new HttpHeaders({
-          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-            'jwt'
-          )}`,
-        }),
-      }
-    );
+    return this.http
+      .get<SuccessResponse<teacherData>>(
+        'http://localhost:5000/api/v1/teachers',
+        {
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
+              'jwt'
+            )}`,
+          }),
+        }
+      )
+      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
   getSingleTeacher(user_id: string) {
-    return this.http.get<LoginSuccessResponse<teacherData>>(
-      `http://localhost:5000/api/v1/teachers/${user_id}`,
-      {
-        headers: new HttpHeaders({
-          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-            'jwt'
-          )}`,
-        }),
-      }
-    );
+    return this.http
+      .get<SuccessResponse<teacherData>>(
+        `http://localhost:5000/api/v1/teachers/${user_id}`,
+        {
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
+              'jwt'
+            )}`,
+          }),
+        }
+      )
+      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 }
