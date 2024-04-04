@@ -20,19 +20,12 @@ export type issueMessage = {
 export class IssuesService {
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService,
     private errorHandlerService: HandleErrorService
   ) {}
 
   getIssues() {
     return this.http
-      .get<SuccessResponse<issueData>>('http://localhost:5000/api/v1/issues', {
-        headers: new HttpHeaders({
-          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-            'jwt'
-          )}`,
-        }),
-      })
+      .get<SuccessResponse<issueData>>('http://localhost:5000/api/v1/issues')
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 
@@ -40,14 +33,7 @@ export class IssuesService {
     return this.http
       .post<SuccessResponse<void>>(
         'http://localhost:5000/api/v1/issues',
-        issueInfo,
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        issueInfo
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }

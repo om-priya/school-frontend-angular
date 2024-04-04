@@ -19,35 +19,20 @@ export type principalData = {
 export class PrincipalService {
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService,
     private errorHandlerService: HandleErrorService
   ) {}
 
   getAllPrincipals() {
     return this.http
       .get<SuccessResponse<principalData>>(
-        'http://localhost:5000/api/v1/principals',
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        'http://localhost:5000/api/v1/principals'
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
   getSinglePrincipals(user_id: string) {
     return this.http
       .get<SuccessResponse<principalData>>(
-        `http://localhost:5000/api/v1/principals/${user_id}`,
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        `http://localhost:5000/api/v1/principals/${user_id}`
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }

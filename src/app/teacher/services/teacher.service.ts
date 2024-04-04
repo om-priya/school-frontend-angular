@@ -19,35 +19,20 @@ export type teacherData = {
 export class TeacherService {
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService,
     private errorHandlerService: HandleErrorService
   ) {}
 
   getAllTeachers() {
     return this.http
       .get<SuccessResponse<teacherData>>(
-        'http://localhost:5000/api/v1/teachers',
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        'http://localhost:5000/api/v1/teachers'
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
   getSingleTeacher(user_id: string) {
     return this.http
       .get<SuccessResponse<teacherData>>(
-        `http://localhost:5000/api/v1/teachers/${user_id}`,
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        `http://localhost:5000/api/v1/teachers/${user_id}`
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }

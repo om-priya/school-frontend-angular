@@ -22,14 +22,7 @@ export class FeedbackService {
   getFeedbacks() {
     return this.http
       .get<SuccessResponse<feedbackData>>(
-        'http://localhost:5000/api/v1/feedbacks',
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        'http://localhost:5000/api/v1/feedbacks'
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }

@@ -31,11 +31,7 @@ export class SubNavbarComponent implements OnInit {
     { label: 'Raise Issues', routerLink: ['/issues/create'] },
   ];
 
-  constructor(
-    private authService: AuthService,
-    private storageService: SessionStorageService,
-    private jwtService: JWTService
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.getItemsForSubNavbar();

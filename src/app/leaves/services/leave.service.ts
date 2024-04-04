@@ -20,19 +20,12 @@ export type leaveData = {
 export class LeaveService {
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService,
     private errorHandlerService: HandleErrorService
   ) {}
 
   getLeaves() {
     return this.http
-      .get<SuccessResponse<leave_data>>('http://localhost:5000/api/v1/leaves', {
-        headers: new HttpHeaders({
-          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-            'jwt'
-          )}`,
-        }),
-      })
+      .get<SuccessResponse<leave_data>>('http://localhost:5000/api/v1/leaves')
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 
@@ -40,14 +33,7 @@ export class LeaveService {
     return this.http
       .post<SuccessResponse<{}>>(
         `http://localhost:5000/api/v1/leaves`,
-        leaveData,
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        leaveData
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
@@ -56,14 +42,7 @@ export class LeaveService {
     return this.http
       .put<SuccessResponse<{}>>(
         `http://localhost:5000/api/v1/leaves/${leaveId}`,
-        {},
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        {}
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }

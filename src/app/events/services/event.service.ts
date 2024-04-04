@@ -14,19 +14,12 @@ export type eventData = {
 export class EventsService {
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService,
     private errorHandlerService: HandleErrorService
   ) {}
 
   getEvents() {
     return this.http
-      .get<SuccessResponse<eventData>>('http://localhost:5000/api/v1/events', {
-        headers: new HttpHeaders({
-          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-            'jwt'
-          )}`,
-        }),
-      })
+      .get<SuccessResponse<eventData>>('http://localhost:5000/api/v1/events')
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 
@@ -34,14 +27,7 @@ export class EventsService {
     return this.http
       .post<SuccessResponse<void>>(
         'http://localhost:5000/api/v1/events',
-        eventDetails,
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
+        eventDetails
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }

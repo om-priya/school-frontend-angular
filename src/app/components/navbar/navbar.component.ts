@@ -36,8 +36,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.logInSubscriber = this.authService.successLogin.subscribe(() => {
       this.isLoggedIn =
         this.storageService.getFromSessionStorage('jwt') === '' ? false : true;
-      const token: string = this.storageService.getFromSessionStorage('jwt');
-      this.role = this.jwtService.getRoleFromToken(token);
+
+      if (this.isLoggedIn === true) {
+        const token: string = this.storageService.getFromSessionStorage('jwt');
+        this.role = this.jwtService.getRoleFromToken(token);
+      }
     });
 
     this.items = [

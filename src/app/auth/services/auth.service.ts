@@ -26,11 +26,9 @@ export class AuthService {
   //   user_id: string | undefined;
 
   successLogin = new Subject<void>();
-  successLogout = new Subject<void>();
 
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService,
     private errorHandlerService: HandleErrorService
   ) {}
 
@@ -38,24 +36,17 @@ export class AuthService {
     return this.http
       .post<SuccessResponse<void>>(
         'http://localhost:5000/api/v1/signup',
-        userData
+        userData,
+        {
+          headers: new HttpHeaders({ 'X-Skip-Interceptor': '' }),
+        }
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 
   logout() {
     return this.http
-      .post<SuccessResponse<void>>(
-        'http://localhost:5000/api/v1/logout',
-        {},
-        {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.storageService.getFromSessionStorage(
-              'jwt'
-            )}`,
-          }),
-        }
-      )
+      .post<SuccessResponse<void>>('http://localhost:5000/api/v1/logout', {})
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 
@@ -66,7 +57,10 @@ export class AuthService {
     return this.http
       .post<SuccessResponse<access_token>>(
         'http://localhost:5000/api/v1/login',
-        userCredentials
+        userCredentials,
+        {
+          headers: new HttpHeaders({ 'X-Skip-Interceptor': '' }),
+        }
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
