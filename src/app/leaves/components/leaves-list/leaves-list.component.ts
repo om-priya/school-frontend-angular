@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LeaveService, leave_data } from '../../services/leave.service';
 import { Subscription } from 'rxjs';
 import { JWTService } from '../../../services/jwtservice.service';
@@ -24,6 +20,7 @@ export class LeavesListComponent implements OnInit, OnDestroy {
   approveLeaveSubscriber!: Subscription;
   cols!: Column[];
   role!: string;
+  visible: boolean = false;
 
   constructor(
     private leaveService: LeaveService,
@@ -37,14 +34,10 @@ export class LeavesListComponent implements OnInit, OnDestroy {
     this.role = this.jwtService.getRoleFromToken(
       this.storageService.getFromSessionStorage('jwt')
     );
+  }
 
-    this.cols = [
-      { field: 'leave_id', header: 'Leave Id' },
-      { field: 'leave_date', header: 'Start From' },
-      { field: 'no_of_days', header: 'Days' },
-      { field: 'username', header: 'Applied By' },
-      { field: 'status', header: 'Status' },
-    ];
+  showDialog() {
+    this.visible = true;
   }
 
   getSeverity(status: string) {
@@ -75,6 +68,12 @@ export class LeavesListComponent implements OnInit, OnDestroy {
         this.fetchLeavesData();
       });
   }
+
+  closeDialog() {
+    this.visible = false;
+    this.fetchLeavesData();
+  }
+
   ngOnDestroy(): void {
     this.fetchLeaveSubscriber?.unsubscribe();
     this.approveLeaveSubscriber?.unsubscribe();

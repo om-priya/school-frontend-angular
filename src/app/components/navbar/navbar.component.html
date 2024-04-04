@@ -16,7 +16,10 @@
       ></button>
     </div>
     <ng-template #logoutButton>
-      <p-button label="Logout" severity="danger"></p-button>
+      <div class="profile-container">
+        <i class="pi pi-user" style="font-size: 1.5rem"></i>
+        <p-button label="Logout" severity="danger" (click)="logoutMe()"></p-button>
+      </div>
     </ng-template>
   </ng-template>
 </p-menubar>

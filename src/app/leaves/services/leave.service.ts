@@ -11,6 +11,10 @@ export type leave_data = {
   status: string;
   username: string;
 };
+export type leaveData = {
+  leave_date: string;
+  no_of_day: string;
+};
 @Injectable({ providedIn: 'root' })
 export class LeaveService {
   constructor(
@@ -21,6 +25,20 @@ export class LeaveService {
   getLeaves() {
     return this.http.get<LoginSuccessResponse<leave_data>>(
       'http://localhost:5000/api/v1/leaves',
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
+            'jwt'
+          )}`,
+        }),
+      }
+    );
+  }
+
+  applyForLeave(leaveData: leaveData) {
+    return this.http.post<LoginSuccessResponse<{}>>(
+      `http://localhost:5000/api/v1/leaves`,
+      leaveData,
       {
         headers: new HttpHeaders({
           Authorization: `Bearer ${this.storageService.getFromSessionStorage(

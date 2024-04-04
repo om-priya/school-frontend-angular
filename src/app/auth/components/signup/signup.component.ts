@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'school-signup',
@@ -17,7 +20,19 @@ export class SignupComponent {
   experience: number = 0;
   fav_subject: string = '';
 
-  signUpUser(formData: NgForm){
+  signUpUserSubscription!: Subscription;
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  signUpUser(formData: NgForm) {
+    const newData = { ...formData.value };
+    newData.experience = newData.experience.toString();
     console.log(formData.value);
+    this.signUpUserSubscription = this.authService
+      .signUp(newData)
+      .subscribe((responseData) => {
+        console.log(responseData);
+        this.router.navigate(['auth/login']);
+      });
   }
 }

@@ -1,1 +1,28 @@
-<p>apply-leave works!</p>
+<div class="center">
+  <form (ngSubmit)="applyForLeave(f)" #f="ngForm">
+    <div class="input-container">
+      <label for="leave-date">Select Your Starting Leave Date:</label>
+      <p-calendar
+        [(ngModel)]="date"
+        dateFormat="dd-mm-yy"
+        id="leave-date"
+        name="leave_date"
+      ></p-calendar>
+    </div>
+    <div class="input-container">
+      <label for="days">Enter No of Days:</label>
+      <p-inputNumber
+        ngModel
+        inputId="minmax"
+        mode="decimal"
+        [min]="1"
+        [max]="10"
+        name="no_of_days"
+      >
+      </p-inputNumber>
+    </div>
+    <div class="input-container">
+      <p-button type="submit" label="Apply" severity="info"></p-button>
+    </div>
+  </form>
+</div>

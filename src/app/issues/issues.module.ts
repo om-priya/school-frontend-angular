@@ -5,8 +5,19 @@ import { IssuesRouting } from './issues-routing.module';
 import { CreateIssuesComponent } from './components/create-issues/create-issues.component';
 
 import { TableModule } from 'primeng/table';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [IssuesListComponent, CreateIssuesComponent],
-  imports: [CommonModule, IssuesRouting, TableModule],
+  imports: [
+    CommonModule,
+    IssuesRouting,
+    TableModule,
+    InputTextareaModule,
+    FormsModule,
+    ButtonModule,
+  ],
 })
 export class IssuesModule {}

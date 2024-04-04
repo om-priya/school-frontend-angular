@@ -27,4 +27,18 @@ export class EventsService {
       }
     );
   }
+  
+  createEvent(eventDetails: {event_message: string}) {
+    return this.http.post<LoginSuccessResponse<void>>(
+      'http://localhost:5000/api/v1/events',
+      eventDetails,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
+            'jwt'
+          )}`,
+        }),
+      }
+    );
+  }
 }

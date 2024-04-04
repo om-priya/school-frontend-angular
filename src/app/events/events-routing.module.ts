@@ -3,10 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EventsListComponent } from './components/events-list/events-list.component';
 import { CreateEventComponent } from './components/create-event/create-event.component';
 
-const EVENTS_ROUTES: Routes = [
-  { path: '', component: EventsListComponent },
-  { path: 'add', component: CreateEventComponent },
-];
+const EVENTS_ROUTES: Routes = [{ path: '', component: EventsListComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(EVENTS_ROUTES)],

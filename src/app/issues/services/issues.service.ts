@@ -8,6 +8,10 @@ export type issueData = {
   issue_message: string;
 };
 
+export type issueMessage = {
+  issue_message: string;
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,9 +21,23 @@ export class IssuesService {
     private storageService: SessionStorageService
   ) {}
 
-  getEvents() {
+  getIssues() {
     return this.http.get<LoginSuccessResponse<issueData>>(
       'http://localhost:5000/api/v1/issues',
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
+            'jwt'
+          )}`,
+        }),
+      }
+    );
+  }
+
+  raiseIssues(issueInfo: issueMessage) {
+    return this.http.post<LoginSuccessResponse<void>>(
+      'http://localhost:5000/api/v1/issues',
+      issueInfo,
       {
         headers: new HttpHeaders({
           Authorization: `Bearer ${this.storageService.getFromSessionStorage(

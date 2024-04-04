@@ -3,7 +3,7 @@
       <p-card
         [header]="teacherData.name"
         [subheader]="teacherData.email"
-        [style]="{ width: '360px' }"
+        [style]="{ width: '500px' }"
       >
         <ng-template pTemplate="header">
           <img
@@ -20,14 +20,18 @@
         <ng-template pTemplate="footer" *ngIf="teacherData.status === 'active'">
           <p-button
             label="Update"
-            icon="pi pi-check"
             severity="primary"
           ></p-button>
           <p-button
             label="Delete"
-            icon="pi pi-times"
             styleClass="p-button-secondary"
             severity="danger"
+            [style]="{ 'margin-left': '.5em' }"
+          ></p-button>
+          <p-button
+            label="Give Feedback"
+            styleClass="p-button-secondary"
+            severity=""
             [style]="{ 'margin-left': '.5em' }"
           ></p-button>
         </ng-template>

@@ -15,6 +15,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SubNavbarComponent } from './components/navbar/sub-navbar/sub-navbar.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +34,7 @@ import { SubNavbarComponent } from './components/navbar/sub-navbar/sub-navbar.co
     MenubarModule,
     ButtonModule,
     SplitterModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
