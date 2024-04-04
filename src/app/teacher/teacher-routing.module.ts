@@ -3,11 +3,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { TeacherListComponent } from './components/teacher-list/teacher-list.component';
 import { TeacherDetailsComponent } from './components/teacher-details/teacher-details.component';
 import { TeacherDetailsEditComponent } from './components/teacher-details-edit/teacher-details-edit.component';
+import { isLoggedInGuard } from '../guards/is-logged-in.guard';
+import { onlyPrincipalGuard } from '../guards/only-principal.guard';
 
 const TEACHER_ROUTES: Routes = [
-  { path: '', component: TeacherListComponent },
-  { path: ':id', component: TeacherDetailsComponent },
-  { path: ':id/edit', component: TeacherDetailsEditComponent },
+  {
+    path: '',
+    canActivate: [isLoggedInGuard, onlyPrincipalGuard],
+    component: TeacherListComponent,
+  },
+  {
+    path: ':id',
+    canActivate: [isLoggedInGuard, onlyPrincipalGuard],
+    component: TeacherDetailsComponent,
+  },
+  {
+    path: ':id/edit',
+    canActivate: [isLoggedInGuard, onlyPrincipalGuard],
+    component: TeacherDetailsEditComponent,
+  },
 ];
 
 @NgModule({
