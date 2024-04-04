@@ -1,0 +1,11 @@
+.center {
+  margin-top: 5vh;
+  width: 95vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header {
+  font-weight: bold;
+  margin-right: 10px;
+}

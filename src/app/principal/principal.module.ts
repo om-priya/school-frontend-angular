@@ -8,6 +8,7 @@ import { PrincipalDetailsEditComponent } from './components/principal-details-ed
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ButtonModule } from 'primeng/button';
     TableModule,
     TagModule,
     ButtonModule,
+    CardModule,
   ],
 })
 export class PrincipalModule {}

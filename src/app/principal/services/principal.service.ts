@@ -32,4 +32,16 @@ export class PrincipalService {
       }
     );
   }
+  getSinglePrincipals(user_id: string) {
+    return this.http.get<LoginSuccessResponse<principalData>>(
+      `http://localhost:5000/api/v1/principals/${user_id}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
+            'jwt'
+          )}`,
+        }),
+      }
+    );
+  }
 }

@@ -32,4 +32,16 @@ export class TeacherService {
       }
     );
   }
+  getSingleTeacher(user_id: string) {
+    return this.http.get<LoginSuccessResponse<teacherData>>(
+      `http://localhost:5000/api/v1/teachers/${user_id}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${this.storageService.getFromSessionStorage(
+            'jwt'
+          )}`,
+        }),
+      }
+    );
+  }
 }

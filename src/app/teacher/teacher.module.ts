@@ -8,6 +8,7 @@ import { TeacherDetailsEditComponent } from './components/teacher-details-edit/t
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,13 @@ import { ButtonModule } from 'primeng/button';
     TeacherDetailsComponent,
     TeacherDetailsEditComponent,
   ],
-  imports: [CommonModule, TeacherRouting, TableModule, TagModule, ButtonModule],
+  imports: [
+    CommonModule,
+    TeacherRouting,
+    TableModule,
+    TagModule,
+    ButtonModule,
+    CardModule,
+  ],
 })
 export class TeacherModule {}
