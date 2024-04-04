@@ -1,1 +1,18 @@
-<p>feedbacks-list works!</p>
+<div class="card">
+  <p-table [value]="feedbacksData" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Feedback Id</th>
+        <th>Feedback Given Date</th>
+        <th>Feedback Message</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-feedback let-columns="columns">
+      <tr>
+        <td>{{ feedback.feedback_id }}</td>
+        <td>{{ feedback.created_date }}</td>
+        <td>{{ feedback.message }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

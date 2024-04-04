@@ -12,7 +12,7 @@ export class JWTService {
     return decoded;
   }
 
-  getRoleFromToken(token: string): string | undefined {
+  getRoleFromToken(token: string): string {
     const decoded: any = this.getTokenClaims(token);
     const claims: { user_id: string; role: string } = decoded?.sub;
     return claims.role;

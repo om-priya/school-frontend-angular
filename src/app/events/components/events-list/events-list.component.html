@@ -1,0 +1,17 @@
+<div class="card">
+    <p-table [value]="eventsData" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Notice Id</th>
+          <th>Notice Message</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-notice let-columns="columns">
+        <tr>
+          <td>{{ notice.notice_id }}</td>
+          <td>{{ notice.notice_message }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

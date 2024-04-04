@@ -5,17 +5,16 @@ import { TeacherListComponent } from './components/teacher-list/teacher-list.com
 import { TeacherDetailsComponent } from './components/teacher-details/teacher-details.component';
 import { TeacherDetailsEditComponent } from './components/teacher-details-edit/teacher-details-edit.component';
 
-
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
     TeacherListComponent,
     TeacherDetailsComponent,
-    TeacherDetailsEditComponent
+    TeacherDetailsEditComponent,
   ],
-  imports: [
-    CommonModule,
-    TeacherRouting
-  ]
+  imports: [CommonModule, TeacherRouting, TableModule, TagModule, ButtonModule],
 })
-export class TeacherModule { }
+export class TeacherModule {}

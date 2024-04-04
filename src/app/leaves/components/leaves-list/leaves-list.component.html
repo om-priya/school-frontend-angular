@@ -1,1 +1,35 @@
-<p>leaves-list works!</p>
+<div class="card">
+  <p-table [value]="leavesData" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Leave Id</th>
+        <th>Start From</th>
+        <th>Days</th>
+        <th>Applied By</th>
+        <th>Status</th>
+        <th *ngIf="role === 'superadmin'">Approve</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-leave let-columns="columns">
+      <tr>
+        <td>{{ leave.leave_id }}</td>
+        <td>{{ leave.leave_date }}</td>
+        <td>{{ leave.no_of_days }}</td>
+        <td>{{ leave.username }}</td>
+        <td>
+          <p-tag
+            [value]="leave.status"
+            [severity]="getSeverity(leave.status)"
+          ></p-tag>
+        </td>
+        <td *ngIf="role === 'superadmin'">
+          <p-button
+            label="Approve"
+            severity="success"
+            (click)="approveLeave(leave.leave_id)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,1 +1,34 @@
-<p>teacher-list works!</p>
+<div class="card">
+    <p-table [value]="teachersData" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Teacher Id</th>
+          <th>Teacher Email</th>
+          <th>Teacher Name</th>
+          <th>Teacher Status</th>
+          <th>View More</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-teacher let-columns="columns">
+        <tr>
+          <td>{{ teacher.user_id }}</td>
+          <td>{{ teacher.email }}</td>
+          <td>{{ teacher.name }}</td>
+          <td>
+            <p-tag
+              [value]="teacher.status"
+              [severity]="getSeverity(teacher.status)"
+            ></p-tag>
+          </td>
+          <td *ngIf="teacher.status === 'active' || teacher.status === 'pending'">
+            <p-button
+              label="View More"
+              severity="Info"
+              (click)="redirectToSingleTeacher(teacher.user_id)"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

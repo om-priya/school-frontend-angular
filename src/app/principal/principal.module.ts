@@ -5,16 +5,22 @@ import { PrincipalListComponent } from './components/principal-list/principal-li
 import { PrincipalDetailsComponent } from './components/principal-details/principal-details.component';
 import { PrincipalDetailsEditComponent } from './components/principal-details-edit/principal-details-edit.component';
 
-
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
     PrincipalListComponent,
     PrincipalDetailsComponent,
-    PrincipalDetailsEditComponent
+    PrincipalDetailsEditComponent,
   ],
   imports: [
-    CommonModule, PrincipalRouting
-  ]
+    CommonModule,
+    PrincipalRouting,
+    TableModule,
+    TagModule,
+    ButtonModule,
+  ],
 })
-export class PrincipalModule { }
+export class PrincipalModule {}

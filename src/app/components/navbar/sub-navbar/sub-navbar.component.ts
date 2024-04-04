@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../auth/services/auth.service';
+import { SessionStorageService } from '../../../services/session-storage-service.service';
+import { JWTService } from '../../../services/jwtservice.service';
 
 @Component({
   selector: 'school-sub-navbar',
@@ -8,28 +10,47 @@ import { AuthService } from '../../../auth/services/auth.service';
   styleUrl: './sub-navbar.component.css',
 })
 export class SubNavbarComponent implements OnInit {
-  role: string | undefined;
+  @Input({ required: true }) role!: string;
   items: MenuItem[] | undefined;
 
   superAdminItems: MenuItem[] = [
-    { label: 'hello Super Admin' },
-    { label: 'hello Super Admin' },
+    { label: 'Principals', routerLink: ['/principals'] },
+    { label: 'Leaves', routerLink: ['/leaves'] },
   ];
 
-  constructor(private authService: AuthService) {}
+  principalItems: MenuItem[] = [
+    { label: 'Teachers', routerLink: ['/teachers'] },
+    { label: 'Events', routerLink: ['/events'] },
+    { label: 'Leaves', routerLink: ['/leaves'] },
+    { label: 'Issues', routerLink: ['/issues'] },
+  ];
+
+  teacherItems: MenuItem[] = [
+    { label: 'Feedbacks', routerLink: ['/feedbacks'] },
+    { label: 'Leaves', routerLink: ['/leaves'] },
+    { label: 'Raise Issues', routerLink: ['/issues/create'] },
+  ];
+
+  constructor(
+    private authService: AuthService,
+    private storageService: SessionStorageService,
+    private jwtService: JWTService
+  ) {}
 
   ngOnInit(): void {
-    this.role = 'superadmin';
     this.getItemsForSubNavbar();
   }
 
   getItemsForSubNavbar(): void {
+    console.log(this.role);
     if (this.role === 'superadmin') {
       this.items = this.superAdminItems;
     } else if (this.role === 'principal') {
       // load principal items
+      this.items = this.principalItems;
     } else {
       // load teacher items
+      this.items = this.teacherItems;
     }
   }
 }

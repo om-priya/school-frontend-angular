@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AboutComponent } from './public/about/about.component';
-import { HomeComponent } from './public/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +24,11 @@ const routes: Routes = [
     path: 'leaves',
     loadChildren: () =>
       import('./leaves/leaves.module').then((m) => m.LeavesModule),
+  },
+  {
+    path: 'events',
+    loadChildren: () =>
+      import('./events/events.module').then((m) => m.EventsModule),
   },
   {
     path: 'principals',

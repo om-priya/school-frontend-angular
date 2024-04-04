@@ -1,10 +1,8 @@
-type access_token = {access_token: string}
-
-export interface LoginSuccessResponse {
+export interface LoginSuccessResponse<T> {
   status_code: number;
   success: boolean;
   message: string;
   data: {
-    json: access_token[];
+    json: T[];
   };
 }

@@ -7,8 +7,8 @@ import { SplitterModule } from 'primeng/splitter';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AboutComponent } from './public/about/about.component';
-import { HomeComponent } from './public/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -22,7 +22,7 @@ import { SubNavbarComponent } from './components/navbar/sub-navbar/sub-navbar.co
     FooterComponent,
     SubNavbarComponent,
     AboutComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

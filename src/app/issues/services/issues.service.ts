@@ -3,22 +3,23 @@ import { Injectable } from '@angular/core';
 import { LoginSuccessResponse } from '../../models/response.model';
 import { SessionStorageService } from '../../services/session-storage-service.service';
 
-export type feedbackData = {
-  created_date: string;
-  feedback_id: string;
-  message: string;
+export type issueData = {
+  issue_id: string;
+  issue_message: string;
 };
 
-@Injectable({ providedIn: 'root' })
-export class FeedbackService {
+@Injectable({
+  providedIn: 'root',
+})
+export class IssuesService {
   constructor(
     private http: HttpClient,
     private storageService: SessionStorageService
   ) {}
 
-  getFeedbacks() {
-    return this.http.get<LoginSuccessResponse<feedbackData>>(
-      'http://localhost:5000/api/v1/feedbacks',
+  getEvents() {
+    return this.http.get<LoginSuccessResponse<issueData>>(
+      'http://localhost:5000/api/v1/issues',
       {
         headers: new HttpHeaders({
           Authorization: `Bearer ${this.storageService.getFromSessionStorage(

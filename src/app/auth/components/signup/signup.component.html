@@ -1,1 +1,68 @@
-<p>signup works!</p>
+<h1 class="center">Welcome User</h1>
+<form (ngSubmit)="signUpUser(f)" #f="ngForm">
+  <div class="input-container">
+    <label for="name">Enter Your Name:</label>
+    <input type="text" name="name" id="name" [(ngModel)]="name" />
+  </div>
+  <input type="hidden" name="school_name" [(ngModel)]="school_name" />
+  <div class="input-container">
+    <p>Select Your Gender:</p>
+    <label>
+      <input type="radio" [(ngModel)]="gender" name="gender" value="m" />
+      Male</label
+    >
+    <label>
+      <input type="radio" [(ngModel)]="gender" name="gender" value="f" />
+      Female
+    </label>
+  </div>
+  <div class="input-container">
+    <label for="email">Enter Your Email:</label>
+    <input type="email" name="email" id="email" [(ngModel)]="email" />
+  </div>
+  <div class="input-container">
+    <label for="phone">Enter Your Phone Number:</label>
+    <input type="text" name="phone" id="phone" [(ngModel)]="phone" />
+  </div>
+  <div class="input-container">
+    <label for="password">Enter Your Password:</label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      [(ngModel)]="password"
+    />
+  </div>
+  <div class="input-container">
+    <label for="experience">Enter Your Experience:</label>
+    <input
+      type="number"
+      name="experience"
+      id="experience"
+      [(ngModel)]="experience"
+    />
+  </div>
+  <div class="input-container">
+    <p>Select Your Designation:</p>
+    <label>
+      <input type="radio" [(ngModel)]="role" name="role" value="teacher" />
+      Teacher</label
+    >
+    <label>
+      <input type="radio" [(ngModel)]="role" name="role" value="principal" />
+      Principal
+    </label>
+  </div>
+  <div class="input-container" *ngIf="role === 'teacher'">
+    <label for="fav_subject">Enter Your Fav Subject:</label>
+    <input
+      type="text"
+      name="fav_subject"
+      id="fav_subject"
+      [(ngModel)]="fav_subject"
+    />
+  </div>
+  <div class="button-container">
+    <button pButton label="Sign Up" class="size"></button>
+  </div>
+</form>

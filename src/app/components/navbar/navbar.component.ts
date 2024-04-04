@@ -15,21 +15,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
   items: MenuItem[] | undefined;
   isLoggedIn: boolean | undefined = false;
   logInSubscriber: Subscription | undefined;
+  role!: string;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private sessionService: SessionStorageService,
-    private jwtHandler: JWTService
+    private storageService: SessionStorageService,
+    private jwtService: JWTService
   ) {}
 
   ngOnInit(): void {
     this.isLoggedIn =
-      this.sessionService.getFromSessionStorage('jwt') === '' ? false : true;
+      this.storageService.getFromSessionStorage('jwt') === '' ? false : true;
+
+    const token: string = this.storageService.getFromSessionStorage('jwt');
+    if (token !== '') {
+      this.role = this.jwtService.getRoleFromToken(token);
+    }
 
     this.logInSubscriber = this.authService.successLogin.subscribe(() => {
       this.isLoggedIn =
-        this.sessionService.getFromSessionStorage('jwt') === '' ? false : true;
+        this.storageService.getFromSessionStorage('jwt') === '' ? false : true;
+      const token: string = this.storageService.getFromSessionStorage('jwt');
+      this.role = this.jwtService.getRoleFromToken(token);
     });
 
     this.items = [

@@ -1,1 +1,35 @@
-<p>principal-list works!</p>
+<div class="card">
+  <p-table [value]="principalsData" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Principal Id</th>
+        <th>Principal Email</th>
+        <th>Principal Name</th>
+        <th>Principal Gender</th>
+        <th>Principal Status</th>
+        <th>View More</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-principal let-columns="columns">
+      <tr>
+        <td>{{ principal.user_id }}</td>
+        <td>{{ principal.email }}</td>
+        <td>{{ principal.name }}</td>
+        <td>{{ principal.gender === "m" ? "Male" : "Female" }}</td>
+        <td>
+          <p-tag
+            [value]="principal.status"
+            [severity]="getSeverity(principal.status)"
+          ></p-tag>
+        </td>
+        <td *ngIf="principal.status === 'active' || principal.status === 'pending'">
+          <p-button
+            label="View More"
+            severity="Info"
+            (click)="redirectToSinglePrincipal(principal.user_id)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
