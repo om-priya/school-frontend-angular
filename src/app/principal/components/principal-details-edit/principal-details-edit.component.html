@@ -1,1 +1,29 @@
-<p>principal-details-edit works!</p>
+<form (ngSubmit)="updatePrincipal(f)" #f="ngForm">
+    <div class="input-container">
+      <label for="name">Enter Your Name:</label>
+      <input type="text" name="name" id="name" [(ngModel)]="name" />
+    </div>
+    <div class="input-container">
+      <p>Select Your Gender:</p>
+      <label>
+        <input type="radio" [(ngModel)]="gender" name="gender" value="m" />
+        Male</label
+      >
+      <label>
+        <input type="radio" [(ngModel)]="gender" name="gender" value="f" />
+        Female
+      </label>
+    </div>
+    <div class="input-container">
+      <label for="email">Enter Your Email:</label>
+      <input type="email" name="email" id="email" [(ngModel)]="email" />
+    </div>
+    <div class="input-container">
+      <label for="phone">Enter Your Phone Number:</label>
+      <input type="text" name="phone" id="phone" [(ngModel)]="phone" />
+    </div>
+    <div class="button-container">
+      <button type="submit" pButton label="Update" class="size"></button>
+    </div>
+  </form>
+  

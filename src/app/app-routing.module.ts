@@ -42,10 +42,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./teacher/teacher.module').then((m) => m.TeacherModule),
   },
-  {
-    path: '**',
-    redirectTo: 'not-found',
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: 'not-found',
+  // },
 ];
 
 @NgModule({

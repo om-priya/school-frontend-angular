@@ -9,6 +9,9 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +26,8 @@ import { CardModule } from 'primeng/card';
     TagModule,
     ButtonModule,
     CardModule,
+    FormsModule,
+    DialogModule
   ],
 })
 export class PrincipalModule {}

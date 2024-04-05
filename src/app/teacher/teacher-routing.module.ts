@@ -17,11 +17,6 @@ const TEACHER_ROUTES: Routes = [
     canActivate: [isLoggedInGuard, onlyPrincipalGuard],
     component: TeacherDetailsComponent,
   },
-  {
-    path: ':id/edit',
-    canActivate: [isLoggedInGuard, onlyPrincipalGuard],
-    component: TeacherDetailsEditComponent,
-  },
 ];
 
 @NgModule({

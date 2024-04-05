@@ -20,15 +20,15 @@
       <ng-template pTemplate="footer" *ngIf="principalData.status === 'active'">
         <p-button
           label="Update"
-          icon="pi pi-check"
           severity="primary"
+          (click)="showDialog()"
         ></p-button>
         <p-button
           label="Delete"
-          icon="pi pi-times"
           styleClass="p-button-secondary"
-          severity="error"
+          severity="danger"
           [style]="{ 'margin-left': '.5em' }"
+          (click)="deletePrincipal(principalData.user_id)"
         ></p-button>
       </ng-template>
       <ng-template
@@ -37,10 +37,24 @@
       >
         <p-button
           label="Approve User"
-          icon="pi pi-check"
           severity="success"
+          (click)="approvePrincipal(principalData.user_id)"
         ></p-button>
       </ng-template>
     </p-card>
   </div>
 </div>
+
+<p-dialog
+  header="Update User Details"
+  [(visible)]="visible"
+  [style]="{ width: '40vw', height: '80vh' }"
+>
+  <school-principal-details-edit
+    [name]="principalData.name"
+    [gender]="principalData.gender"
+    [email]="principalData.email"
+    [user_id]="principalData.user_id"
+    (successUpdated)="closeDialog()"
+  ></school-principal-details-edit>
+</p-dialog>

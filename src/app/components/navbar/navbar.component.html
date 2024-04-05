@@ -1,9 +1,6 @@
 <p-menubar [model]="items">
   <ng-template pTemplate="start">
-    <img
-      src="https://primefaces.org/cdn/primeng/images/primeng.svg"
-      height="40"
-    />
+    <img src="../../../assets/icon.jpg" height="40" />
   </ng-template>
   <ng-template pTemplate="end">
     <div *ngIf="!isLoggedIn; else logoutButton">
@@ -20,7 +17,7 @@
         <i class="pi pi-user" style="font-size: 1.5rem"></i>
         <p-button
           label="Logout"
-          severity="error"
+          severity="danger"
           (click)="logoutMe()"
         ></p-button>
       </div>

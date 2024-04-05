@@ -11,6 +11,10 @@ export type feedbackData = {
   message: string;
 };
 
+export type CreateFeedback = {
+  feedback_message: string;
+};
+
 @Injectable({ providedIn: 'root' })
 export class FeedbackService {
   constructor(
@@ -23,6 +27,15 @@ export class FeedbackService {
     return this.http
       .get<SuccessResponse<feedbackData>>(
         'http://localhost:5000/api/v1/feedbacks'
+      )
+      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  }
+
+  giveFeedback(feedbackData: CreateFeedback, user_id: string) {
+    return this.http
+      .post<SuccessResponse<feedbackData>>(
+        `http://localhost:5000/api/v1/feedbacks/${user_id}`,
+        feedbackData
       )
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }

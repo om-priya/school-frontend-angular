@@ -11,25 +11,27 @@
           src="https://primefaces.org/cdn/primeng/images/usercard.png"
         />
       </ng-template>
-      <!-- <p>
-          <span class="header">Gender:</span
-          >{{ teacherData.gender === "m" ? "Male" : "Female" }}
-        </p> -->
       <p><span class="header">Status:</span> {{ teacherData.status }}</p>
       <p><span class="header">User ID:</span> {{ teacherData.user_id }}</p>
       <ng-template pTemplate="footer" *ngIf="teacherData.status === 'active'">
-        <p-button label="Update" severity="primary"></p-button>
+        <p-button
+          label="Update"
+          severity="primary"
+          (click)="showDialog()"
+        ></p-button>
         <p-button
           label="Delete"
           styleClass="p-button-secondary"
-          severity="error"
+          severity="danger"
           [style]="{ 'margin-left': '.5em' }"
+          (click)="deleteTeacher(teacherData.user_id)"
         ></p-button>
         <p-button
           label="Give Feedback"
           styleClass="p-button-secondary"
-          severity=""
+          severity="info"
           [style]="{ 'margin-left': '.5em' }"
+          (click)="navigateToCreateFeedback(teacherData.user_id)"
         ></p-button>
       </ng-template>
       <ng-template pTemplate="footer" *ngIf="teacherData.status === 'pending'">
@@ -37,8 +39,22 @@
           label="Approve User"
           icon="pi pi-check"
           severity="success"
+          (click)="approveTeacher(teacherData.user_id)"
         ></p-button>
       </ng-template>
     </p-card>
   </div>
 </div>
+<p-dialog
+  header="Update User Details"
+  [(visible)]="visible"
+  [style]="{ width: '40vw', height: '80vh' }"
+>
+  <school-teacher-details-edit
+    [name]="teacherData.name"
+    [gender]="teacherData.gender === 'Male' ? 'm' : 'f'"
+    [email]="teacherData.email"
+    [user_id]="teacherData.user_id"
+    (successUpdated)="closeDialog()"
+  ></school-teacher-details-edit>
+</p-dialog>
