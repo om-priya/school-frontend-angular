@@ -13,8 +13,8 @@ import { MessageService } from 'primeng/api';
   styleUrl: './principal-list.component.css',
 })
 export class PrincipalListComponent implements OnInit, OnDestroy {
-  fetchAllPrincipalsSubscriber!: Subscription;
-  principalsData!: principalData[];
+  fetchAllPrincipalsSubscriber: Subscription;
+  principalsData: principalData[];
 
   constructor(
     private principalService: PrincipalService,

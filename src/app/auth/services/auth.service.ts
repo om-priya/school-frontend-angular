@@ -21,10 +21,6 @@ export interface UserData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  //   isLoggedIn: boolean | undefined;
-  //   role: string | undefined;
-  //   user_id: string | undefined;
-
   successLogin = new Subject<void>();
 
   constructor(

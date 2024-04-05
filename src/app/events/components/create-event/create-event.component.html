@@ -1,16 +1,17 @@
 <div class="center">
-    <h3>Create Event For School</h3>
-    <form (ngSubmit)="createEvent(f)" #f="ngForm">
-      <label for="event_message">Enter Event Details:</label>
-      <textarea
-        rows="5"
-        cols="30"
-        name="event_message"
-        id="event_message"
-        pInputTextarea
-        [(ngModel)]="event_message"
-      ></textarea>
-      <p-button type="submit" label="Submit"></p-button>
-    </form>
-  </div>
-  
+  <h3>Create Event For School</h3>
+  <form (ngSubmit)="createEvent(f)" #f="ngForm">
+    <label for="event_message">Enter Event Details:</label>
+    <textarea
+      rows="5"
+      cols="30"
+      name="event_message"
+      id="event_message"
+      pInputTextarea
+      [(ngModel)]="event_message"
+      required
+      minlength="10"
+    ></textarea>
+    <p-button type="submit" label="Submit" [disabled]="!f.valid"></p-button>
+  </form>
+</div>

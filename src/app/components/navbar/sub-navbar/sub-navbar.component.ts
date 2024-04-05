@@ -10,8 +10,8 @@ import { JWTService } from '../../../services/jwtservice.service';
   styleUrl: './sub-navbar.component.css',
 })
 export class SubNavbarComponent implements OnInit {
-  @Input({ required: true }) role!: string;
-  items: MenuItem[] | undefined;
+  @Input({ required: true }) role: string;
+  items: MenuItem[];
 
   superAdminItems: MenuItem[] = [
     { label: 'Principals', routerLink: ['/principals'] },

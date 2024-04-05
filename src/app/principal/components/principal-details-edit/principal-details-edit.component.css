@@ -40,3 +40,6 @@ input[type="radio"] {
 .size {
   width: 12vw;
 }
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}

@@ -11,7 +11,7 @@ import { MessageService } from 'primeng/api';
 })
 export class CreateEventComponent implements OnDestroy {
   event_message: string = '';
-  createEventSubscription!: Subscription;
+  createEventSubscription: Subscription;
 
   @Output() eventAdded = new EventEmitter<void>();
   constructor(

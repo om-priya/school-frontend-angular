@@ -9,8 +9,8 @@ import { MessageService } from 'primeng/api';
   styleUrl: './issues-list.component.css',
 })
 export class IssuesListComponent implements OnInit, OnDestroy {
-  fetchIssueSubscription!: Subscription;
-  issuesData!: issueData[];
+  fetchIssueSubscription: Subscription;
+  issuesData: issueData[];
 
   constructor(
     private issueService: IssuesService,

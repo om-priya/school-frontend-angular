@@ -11,9 +11,9 @@ import { MessageService } from 'primeng/api';
   styleUrl: './create-feedback.component.css',
 })
 export class CreateFeedbackComponent implements OnInit, OnDestroy {
-  feedbackMessage!: string;
-  user_id!: string;
-  giveFeedbackSubscriber!: Subscription;
+  feedbackMessage: string;
+  user_id: string;
+  giveFeedbackSubscriber: Subscription;
 
   constructor(
     private route: ActivatedRoute,

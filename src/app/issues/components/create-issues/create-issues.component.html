@@ -10,7 +10,9 @@
       id="issue_message"
       pInputTextarea
       [(ngModel)]="issueMessage"
+      [required]="true"
+      [minlength]="10"
     ></textarea>
-    <p-button type="submit" label="Submit"></p-button>
+    <p-button type="submit" label="Submit" [disabled]="!f.valid"></p-button>
   </form>
 </div>

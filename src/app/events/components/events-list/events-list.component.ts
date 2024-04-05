@@ -11,10 +11,10 @@ import { MessageService } from 'primeng/api';
   styleUrl: './events-list.component.css',
 })
 export class EventsListComponent implements OnInit, OnDestroy {
-  eventsData!: eventData[];
+  eventsData: eventData[];
   role: string = '';
   visible: boolean = false;
-  fetchEventDataSubscriber!: Subscription;
+  fetchEventDataSubscriber: Subscription;
 
   constructor(
     private eventService: EventsService,

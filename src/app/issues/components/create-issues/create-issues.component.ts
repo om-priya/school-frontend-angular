@@ -11,7 +11,7 @@ import { MessageService } from 'primeng/api';
 })
 export class CreateIssuesComponent implements OnDestroy {
   issueMessage: string = '';
-  raiseIssueSubscription!: Subscription;
+  raiseIssueSubscription: Subscription;
 
   constructor(
     private issueService: IssuesService,

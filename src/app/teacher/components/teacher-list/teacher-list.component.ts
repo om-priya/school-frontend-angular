@@ -10,8 +10,8 @@ import { MessageService } from 'primeng/api';
   styleUrl: './teacher-list.component.css',
 })
 export class TeacherListComponent implements OnInit, OnDestroy {
-  fetchAllTeachersSubscriber!: Subscription;
-  teachersData!: teacherData[];
+  fetchAllTeachersSubscriber: Subscription;
+  teachersData: teacherData[];
 
   constructor(
     private teacherService: TeacherService,

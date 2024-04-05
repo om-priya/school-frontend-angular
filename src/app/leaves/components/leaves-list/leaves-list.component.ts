@@ -16,11 +16,11 @@ interface Column {
   styleUrl: './leaves-list.component.css',
 })
 export class LeavesListComponent implements OnInit, OnDestroy {
-  leavesData!: leave_data[];
-  fetchLeaveSubscriber!: Subscription;
-  approveLeaveSubscriber!: Subscription;
-  cols!: Column[];
-  role!: string;
+  leavesData: leave_data[];
+  fetchLeaveSubscriber: Subscription;
+  approveLeaveSubscriber: Subscription;
+  cols: Column[];
+  role: string;
   visible: boolean = false;
 
   constructor(
@@ -63,6 +63,7 @@ export class LeavesListComponent implements OnInit, OnDestroy {
           summary: 'Error',
           detail: error,
         });
+        this.leavesData = [];
       },
     });
   }

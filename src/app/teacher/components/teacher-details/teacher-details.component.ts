@@ -10,9 +10,9 @@ import { MessageService } from 'primeng/api';
   styleUrl: './teacher-details.component.css',
 })
 export class TeacherDetailsComponent implements OnInit, OnDestroy {
-  fetchSingleRouteSubscriber!: Subscription;
-  deleteTeacherSubscriber!: Subscription;
-  approveTeacherSubscriber!: Subscription;
+  fetchSingleRouteSubscriber: Subscription;
+  deleteTeacherSubscriber: Subscription;
+  approveTeacherSubscriber: Subscription;
   teacherData: teacherData;
   visible: boolean = false;
 

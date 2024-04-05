@@ -12,10 +12,10 @@ import { Subscriber, Subscription } from 'rxjs';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  items: MenuItem[] | undefined;
-  isLoggedIn: boolean | undefined = false;
-  logInSubscriber: Subscription | undefined;
-  role!: string;
+  items: MenuItem[];
+  isLoggedIn: boolean = false;
+  logInSubscriber: Subscription;
+  role: string;
 
   constructor(
     private router: Router,

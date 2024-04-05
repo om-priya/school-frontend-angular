@@ -9,8 +9,8 @@ import { MessageService } from 'primeng/api';
   styleUrl: './feedbacks-list.component.css',
 })
 export class FeedbacksListComponent implements OnInit, OnDestroy {
-  fetchFeedbackSubscriber!: Subscription;
-  feedbacksData!: feedbackData[];
+  fetchFeedbackSubscriber: Subscription;
+  feedbacksData: feedbackData[];
 
   constructor(
     private feedbackService: FeedbackService,

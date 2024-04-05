@@ -27,7 +27,6 @@ export class HandleErrorService {
         this.router.navigate(['']);
         return throwError(errorData.err_message);
       case 404:
-        this.router.navigate(['not-found']);
         return throwError(errorData.err_message);
       case 409:
         return throwError('Provide Unique Data');

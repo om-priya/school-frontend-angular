@@ -10,8 +10,8 @@ import { MessageService } from 'primeng/api';
   styleUrl: './apply-leave.component.css',
 })
 export class ApplyLeaveComponent implements OnDestroy {
-  date!: Date;
-  applyLeaveSubscription!: Subscription;
+  date: Date;
+  applyLeaveSubscription: Subscription;
 
   @Output() onSuccessApplied = new EventEmitter<void>();
 

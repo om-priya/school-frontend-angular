@@ -21,7 +21,7 @@ export class SignupComponent implements OnDestroy {
   experience: number = 0;
   fav_subject: string = '';
 
-  signUpUserSubscription!: Subscription;
+  signUpUserSubscription: Subscription;
 
   constructor(
     private authService: AuthService,

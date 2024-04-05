@@ -13,10 +13,10 @@ import { MessageService } from 'primeng/api';
   styleUrl: './principal-details.component.css',
 })
 export class PrincipalDetailsComponent implements OnInit, OnDestroy {
-  fetchSingleRouteSubscriber!: Subscription;
-  deletePrincipalSubscriber!: Subscription;
-  approvePrincipalSubscriber!: Subscription;
-  principalData!: principalData;
+  fetchSingleRouteSubscriber: Subscription;
+  deletePrincipalSubscriber: Subscription;
+  approvePrincipalSubscriber: Subscription;
+  principalData: principalData;
   visible: boolean = false;
 
   constructor(

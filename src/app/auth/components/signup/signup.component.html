@@ -2,27 +2,60 @@
 <form (ngSubmit)="signUpUser(f)" #f="ngForm">
   <div class="input-container">
     <label for="name">Enter Your Name:</label>
-    <input type="text" name="name" id="name" [(ngModel)]="name" />
+    <input
+      type="text"
+      name="name"
+      id="name"
+      [(ngModel)]="name"
+      required
+      pattern="([A-Za-z]{2,25}[\s]?)+"
+    />
   </div>
   <input type="hidden" name="school_name" [(ngModel)]="school_name" />
   <div class="input-container">
     <p>Select Your Gender:</p>
     <label>
-      <input type="radio" [(ngModel)]="gender" name="gender" value="m" />
+      <input
+        type="radio"
+        [(ngModel)]="gender"
+        name="gender"
+        value="m"
+        required
+      />
       Male</label
     >
     <label>
-      <input type="radio" [(ngModel)]="gender" name="gender" value="f" />
+      <input
+        type="radio"
+        [(ngModel)]="gender"
+        name="gender"
+        value="f"
+        required
+      />
       Female
     </label>
   </div>
   <div class="input-container">
     <label for="email">Enter Your Email:</label>
-    <input type="email" name="email" id="email" [(ngModel)]="email" />
+    <input
+      type="email"
+      name="email"
+      id="email"
+      [(ngModel)]="email"
+      required
+      email
+    />
   </div>
   <div class="input-container">
     <label for="phone">Enter Your Phone Number:</label>
-    <input type="text" name="phone" id="phone" [(ngModel)]="phone" />
+    <input
+      type="text"
+      name="phone"
+      id="phone"
+      [(ngModel)]="phone"
+      required
+      pattern="^[0-9]{10}$"
+    />
   </div>
   <div class="input-container">
     <label for="password">Enter Your Password:</label>
@@ -31,6 +64,8 @@
       name="password"
       id="password"
       [(ngModel)]="password"
+      required
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
     />
   </div>
   <div class="input-container">
@@ -40,16 +75,31 @@
       name="experience"
       id="experience"
       [(ngModel)]="experience"
+      required
+      [min]="0"
+      [max]="10"
     />
   </div>
   <div class="input-container">
     <p>Select Your Designation:</p>
     <label>
-      <input type="radio" [(ngModel)]="role" name="role" value="teacher" />
+      <input
+        type="radio"
+        [(ngModel)]="role"
+        name="role"
+        value="teacher"
+        required
+      />
       Teacher</label
     >
     <label>
-      <input type="radio" [(ngModel)]="role" name="role" value="principal" />
+      <input
+        type="radio"
+        [(ngModel)]="role"
+        name="role"
+        value="principal"
+        required
+      />
       Principal
     </label>
   </div>
@@ -60,9 +110,17 @@
       name="fav_subject"
       id="fav_subject"
       [(ngModel)]="fav_subject"
+      required
+      pattern="([a-zA-z]+[\s]?)+"
     />
   </div>
   <div class="button-container">
-    <button type="submit" pButton label="Sign Up" class="size"></button>
+    <button
+      type="submit"
+      pButton
+      label="Sign Up"
+      class="size"
+      [disabled]="!f.valid"
+    ></button>
   </div>
 </form>

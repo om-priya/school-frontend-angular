@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnDestroy {
-  loginResponse: Subscription | undefined;
+  loginResponse: Subscription;
 
   constructor(
     private router: Router,

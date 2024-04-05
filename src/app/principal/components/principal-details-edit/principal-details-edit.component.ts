@@ -16,10 +16,10 @@ import { MessageService } from 'primeng/api';
   styleUrl: './principal-details-edit.component.css',
 })
 export class PrincipalDetailsEditComponent implements OnDestroy {
-  @Input() name!: string;
-  @Input() gender!: string;
-  @Input() email!: string;
-  @Input() phone!: string;
+  @Input() name: string;
+  @Input() gender: string;
+  @Input() email: string;
+  @Input() phone: string;
   @Input() user_id: string;
 
   @Output() successUpdated = new EventEmitter<void>();
