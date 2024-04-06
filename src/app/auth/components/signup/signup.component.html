@@ -1,3 +1,4 @@
+<!-- Form for Sign Up the user to the platform -->
 <h1 class="center">Welcome User</h1>
 <form (ngSubmit)="signUpUser(f)" #f="ngForm">
   <div class="input-container">
@@ -121,6 +122,12 @@
       label="Sign Up"
       class="size"
       [disabled]="!f.valid"
+    ></button>
+    <button
+      pButton
+      (click)="navigateToLogin()"
+      label="Log In"
+      class="p-button-success size"
     ></button>
   </div>
 </form>

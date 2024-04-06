@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'school-signup',
@@ -29,13 +30,21 @@ export class SignupComponent implements OnDestroy {
     private messageService: MessageService
   ) {}
 
+  navigateToLogin() {
+    this.router.navigate(['auth/login']);
+  }
+
+  // Subscribing to the signing up of the user
   signUpUser(formData: NgForm) {
+    // formatting data for the backend API
     const newData = { ...formData.value };
     newData.experience = newData.experience.toString();
 
+    //Upon Successfull signUp navigate to /login
     this.signUpUserSubscription = this.authService.signUp(newData).subscribe({
       next: (responseData) => {
         this.router.navigate(['auth/login']);
+        // showing toast in the frontend
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -43,6 +52,7 @@ export class SignupComponent implements OnDestroy {
         });
       },
       error: (error) => {
+        // showing toast in the frontend
         this.messageService.add({
           severity: 'error',
           summary: 'Error',

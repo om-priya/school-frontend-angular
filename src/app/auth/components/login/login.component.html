@@ -1,3 +1,4 @@
+<!-- Forms for loging User -->
 <form (ngSubmit)="checkCredentials(f)" #f="ngForm">
   <div class="input-container">
     <label for="user_name">Enter Your UserName:</label>
@@ -7,7 +8,7 @@
       id="user_name"
       ngModel
       required
-      pattern="[A-Za-z0-9._%+-]+"
+      pattern="[A-Za-z0-9._%+\-]+"
     />
   </div>
   <div class="input-container">

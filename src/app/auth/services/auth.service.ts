@@ -1,26 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError } from 'rxjs';
-import { SuccessResponse } from '../../models/response.model';
-import { SessionStorageService } from '../../services/session-storage-service.service';
+
 import { HandleErrorService } from '../../services/handle-error.service';
-
-type access_token = { access_token: string };
-
-export interface UserData {
-  name: string;
-  gender: string;
-  email: string;
-  phone: string;
-  school_name: string;
-  password: string;
-  role: string;
-  experience: string;
-  fav_subject?: string;
-}
+import { environment } from '../../../environments/environment';
+import { SuccessResponse } from '../../models/response.model';
+import { UserData } from '../auth.model';
+import { AccessToken } from '../auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  // Subject used to changed some UI based on Successfull Login
   successLogin = new Subject<void>();
 
   constructor(
@@ -28,36 +18,56 @@ export class AuthService {
     private errorHandlerService: HandleErrorService
   ) {}
 
+  // return an observable for signing up the user which can be subscribed in the component
   signUp(userData: UserData) {
-    return this.http
-      .post<SuccessResponse<void>>(
-        'http://localhost:5000/api/v1/signup',
-        userData,
-        {
-          headers: new HttpHeaders({ 'X-Skip-Interceptor': '' }),
-        }
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+    return (
+      this.http
+        .post<SuccessResponse<void>>(
+          `${environment.apiUrlV1}signup`,
+          userData,
+          {
+            // custom header for skipping the token Interceptor
+            headers: new HttpHeaders({ 'X-Skip-Interceptor': '' }),
+          }
+        )
+        // pipe operator and using generic error to show the message
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
+  // return observable for logging out from the application.
   logout() {
-    return this.http
-      .post<SuccessResponse<void>>('http://localhost:5000/api/v1/logout', {})
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+    return (
+      this.http
+        .post<SuccessResponse<void>>(`${environment.apiUrlV1}logout`, {})
+        // pipe operator and using generic error to show the message
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
+  // return observable for login to the application
   login(userCredentials: {
     user_name: string;
     password: string;
   }): Observable<any> {
-    return this.http
-      .post<SuccessResponse<access_token>>(
-        'http://localhost:5000/api/v1/login',
-        userCredentials,
-        {
-          headers: new HttpHeaders({ 'X-Skip-Interceptor': '' }),
-        }
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+    return (
+      this.http
+        .post<SuccessResponse<AccessToken>>(
+          `${environment.apiUrlV1}login`,
+          userCredentials,
+          {
+            // custom header for skipping the token Interceptor
+            headers: new HttpHeaders({ 'X-Skip-Interceptor': '' }),
+          }
+        )
+        // pipe operator and using generic error to show the message
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 }
