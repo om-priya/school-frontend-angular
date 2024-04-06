@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError } from 'rxjs';
 
 import { HandleErrorService } from '../../services/handle-error.service';
 import { environment } from '../../../environments/environment';
 import { SuccessResponse } from '../../models/response.model';
-import { UserData } from '../auth.model';
+import { UserCredentials, UserData } from '../auth.model';
 import { AccessToken } from '../auth.model';
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +19,7 @@ export class AuthService {
   ) {}
 
   // return an observable for signing up the user which can be subscribed in the component
-  signUp(userData: UserData) {
+  signUp(userData: UserData): Observable<SuccessResponse<void>> {
     return (
       this.http
         .post<SuccessResponse<void>>(
@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   // return observable for logging out from the application.
-  logout() {
+  logout(): Observable<SuccessResponse<void>> {
     return (
       this.http
         .post<SuccessResponse<void>>(`${environment.apiUrlV1}logout`, {})
@@ -50,10 +50,9 @@ export class AuthService {
   }
 
   // return observable for login to the application
-  login(userCredentials: {
-    user_name: string;
-    password: string;
-  }): Observable<any> {
+  login(
+    userCredentials: UserCredentials
+  ): Observable<SuccessResponse<AccessToken>> {
     return (
       this.http
         .post<SuccessResponse<AccessToken>>(

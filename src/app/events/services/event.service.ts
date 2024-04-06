@@ -1,14 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SuccessResponse } from '../../models/response.model';
-import { SessionStorageService } from '../../services/session-storage-service.service';
-import { catchError } from 'rxjs';
-import { HandleErrorService } from '../../services/handle-error.service';
+import { Observable, catchError } from 'rxjs';
 
-export type eventData = {
-  notice_id: string;
-  notice_message: string;
-};
+import { environment } from '../../../environments/environment';
+import { SuccessResponse } from '../../models/response.model';
+import { HandleErrorService } from '../../services/handle-error.service';
+import { createEventData, eventData } from '../events.model';
 
 @Injectable({ providedIn: 'root' })
 export class EventsService {
@@ -17,18 +14,27 @@ export class EventsService {
     private errorHandlerService: HandleErrorService
   ) {}
 
-  getEvents() {
-    return this.http
-      .get<SuccessResponse<eventData>>('http://localhost:5000/api/v1/events')
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  getEvents(): Observable<SuccessResponse<eventData>> {
+    return (
+      this.http
+        .get<SuccessResponse<eventData>>(`${environment}events`)
+        // pipe operator and using generic error to show the message
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  createEvent(eventDetails: { event_message: string }) {
-    return this.http
-      .post<SuccessResponse<void>>(
-        'http://localhost:5000/api/v1/events',
-        eventDetails
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  createEvent(
+    eventDetails: createEventData
+  ): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .post<SuccessResponse<void>>(`${environment}events`, eventDetails)
+        // pipe operator and using generic error to show the message
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 }

@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { EventsService, eventData } from '../../services/event.service';
+import { MessageService } from 'primeng/api';
+
+import { EventsService } from '../../services/event.service';
 import { JWTService } from '../../../services/jwtservice.service';
 import { SessionStorageService } from '../../../services/session-storage-service.service';
-import { MessageService } from 'primeng/api';
+import { eventData } from '../../events.model';
 
 @Component({
   selector: 'school-events-list',
@@ -23,6 +25,7 @@ export class EventsListComponent implements OnInit, OnDestroy {
     private messageService: MessageService
   ) {}
 
+  // fetching data in OnInit
   ngOnInit(): void {
     this.role = this.jwtService.getRoleFromToken(
       this.storageService.getFromSessionStorage('jwt')
@@ -30,12 +33,14 @@ export class EventsListComponent implements OnInit, OnDestroy {
     this.fetchEvents();
   }
 
+  // sunscribing to getEvents Service
   fetchEvents() {
     this.fetchEventDataSubscriber = this.eventService.getEvents().subscribe({
       next: (responseData) => {
         this.eventsData = responseData.data.json;
       },
       error: (error) => {
+        // showing toast in frontend
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -45,10 +50,12 @@ export class EventsListComponent implements OnInit, OnDestroy {
     });
   }
 
+  // function to show overlay
   showDialog() {
     this.visible = true;
   }
 
+  // function to close overlay
   closeDialog() {
     this.visible = false;
     this.fetchEvents();

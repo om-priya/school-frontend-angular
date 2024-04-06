@@ -11,3 +11,8 @@ export interface UserData {
   experience: string;
   fav_subject?: string;
 }
+
+export type UserCredentials = {
+  user_name: string;
+  password: string;
+};
