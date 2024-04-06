@@ -1,8 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { AuthService } from '../../../auth/services/auth.service';
-import { SessionStorageService } from '../../../services/session-storage-service.service';
-import { JWTService } from '../../../services/jwtservice.service';
 
 @Component({
   selector: 'school-sub-navbar',
@@ -13,11 +10,13 @@ export class SubNavbarComponent implements OnInit {
   @Input({ required: true }) role: string;
   items: MenuItem[];
 
+  // subnavbar if role is superadmin
   superAdminItems: MenuItem[] = [
     { label: 'Principals', routerLink: ['/principals'] },
     { label: 'Leaves', routerLink: ['/leaves'] },
   ];
 
+  // subnavbar if role is principal
   principalItems: MenuItem[] = [
     { label: 'Teachers', routerLink: ['/teachers'] },
     { label: 'Events', routerLink: ['/events'] },
@@ -25,6 +24,7 @@ export class SubNavbarComponent implements OnInit {
     { label: 'Issues', routerLink: ['/issues'] },
   ];
 
+  // subnavbar if role is teacher
   teacherItems: MenuItem[] = [
     { label: 'Feedbacks', routerLink: ['/feedbacks'] },
     { label: 'Leaves', routerLink: ['/leaves'] },
@@ -37,15 +37,14 @@ export class SubNavbarComponent implements OnInit {
     this.getItemsForSubNavbar();
   }
 
+  // navbar items based on roles
   getItemsForSubNavbar(): void {
     console.log(this.role);
     if (this.role === 'superadmin') {
       this.items = this.superAdminItems;
     } else if (this.role === 'principal') {
-      // load principal items
       this.items = this.principalItems;
     } else {
-      // load teacher items
       this.items = this.teacherItems;
     }
   }

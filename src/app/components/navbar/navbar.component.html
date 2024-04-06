@@ -1,8 +1,10 @@
+<!-- Navabar for the App -->
 <p-menubar [model]="items">
   <ng-template pTemplate="start">
     <img src="../../../assets/icon.jpg" height="40" />
   </ng-template>
   <ng-template pTemplate="end">
+    <!-- Conditional rendering based on whether loggedin or not (login logout button)-->
     <div *ngIf="!isLoggedIn; else logoutButton">
       <button
         pButton
@@ -25,6 +27,8 @@
   </ng-template>
 </p-menubar>
 
+<!-- Sub Navbar which is based on role such that if role 
+  changes sub navbar will change because of @Input()-->
 <div *ngIf="isLoggedIn">
   <school-sub-navbar [role]="role"></school-sub-navbar>
 </div>

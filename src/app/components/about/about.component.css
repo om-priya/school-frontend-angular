@@ -5,10 +5,12 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
+
 .container-item {
   min-width: 200px;
   max-width: 400px;
 }
+
 img {
   max-width: 400px;
 }

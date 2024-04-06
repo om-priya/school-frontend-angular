@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/api';
+
 import { SessionStorageService } from '../../services/session-storage-service.service';
 import { JWTService } from '../../services/jwtservice.service';
 import { AuthService } from '../../auth/services/auth.service';
-import { Subscriber, Subscription } from 'rxjs';
 
 @Component({
   selector: 'school-navbar',
@@ -25,24 +26,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn =
-      this.storageService.getFromSessionStorage('jwt') === '' ? false : true;
-
+    // fetching token from session storage and setting value for rendering
     const token: string = this.storageService.getFromSessionStorage('jwt');
     if (token !== '') {
+      this.isLoggedIn = true;
       this.role = this.jwtService.getRoleFromToken(token);
     }
 
+    // loginInSubscriber from the auth service to change the UI Whenever some tries to logIn
     this.logInSubscriber = this.authService.successLogin.subscribe(() => {
-      this.isLoggedIn =
-        this.storageService.getFromSessionStorage('jwt') === '' ? false : true;
-
-      if (this.isLoggedIn === true) {
-        const token: string = this.storageService.getFromSessionStorage('jwt');
+      const token: string = this.storageService.getFromSessionStorage('jwt');
+      if (token !== '') {
+        this.isLoggedIn = true;
         this.role = this.jwtService.getRoleFromToken(token);
+      } else {
+        this.isLoggedIn = false;
       }
     });
 
+    // items list for rendering navbar of PrimeNg
     this.items = [
       {
         label: '<b>Home<b>',
@@ -59,6 +61,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/auth/login']);
   }
 
+  // clearing the session storage and setting the values to initial value
   logoutMe() {
     sessionStorage.clear();
     this.isLoggedIn = false;
