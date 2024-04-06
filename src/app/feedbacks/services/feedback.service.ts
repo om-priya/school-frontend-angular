@@ -1,42 +1,38 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError } from 'rxjs';
+
+import { environment } from '../../../environments/environment';
+import { CreateFeedback, FeedbackData } from '../feedback.model';
 import { SuccessResponse } from '../../models/response.model';
-import { SessionStorageService } from '../../services/session-storage-service.service';
-import { catchError } from 'rxjs';
 import { HandleErrorService } from '../../services/handle-error.service';
-
-export type feedbackData = {
-  created_date: string;
-  feedback_id: string;
-  message: string;
-};
-
-export type CreateFeedback = {
-  feedback_message: string;
-};
 
 @Injectable({ providedIn: 'root' })
 export class FeedbackService {
   constructor(
     private http: HttpClient,
-    private storageService: SessionStorageService,
     private errorHandlerService: HandleErrorService
   ) {}
 
-  getFeedbacks() {
+  getFeedbacks(): Observable<SuccessResponse<FeedbackData>> {
     return this.http
-      .get<SuccessResponse<feedbackData>>(
-        'http://localhost:5000/api/v1/feedbacks'
+      .get<SuccessResponse<FeedbackData>>(
+        `${environment.apiUrlV1}feedbacks`
       )
+      // pipe operator and using generic error to show the message
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 
-  giveFeedback(feedbackData: CreateFeedback, user_id: string) {
+  giveFeedback(
+    feedbackData: CreateFeedback,
+    user_id: string
+  ): Observable<SuccessResponse<void>> {
     return this.http
-      .post<SuccessResponse<feedbackData>>(
-        `http://localhost:5000/api/v1/feedbacks/${user_id}`,
+      .post<SuccessResponse<void>>(
+        `${environment.apiUrlV1}feedbacks/${user_id}`,
         feedbackData
       )
+      // pipe operator and using generic error to show the message
       .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
   }
 }

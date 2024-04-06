@@ -1,17 +1,18 @@
-import { CanActivateFn, Router } from '@angular/router';
-import { SessionStorageService } from '../services/session-storage-service.service';
-import { JWTService } from '../services/jwtservice.service';
 import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+
+import { SessionStorageService } from '../services/session-storage-service.service';
 import { AuthService } from '../auth/services/auth.service';
 
 export const isLoggedInGuard: CanActivateFn = (route, state) => {
+  // Injecting Services in the Function
   const storageService = inject(SessionStorageService);
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  const token = storageService.getFromSessionStorage('jwt');
+  const TOKEN = storageService.getFromSessionStorage('jwt');
 
-  if (token !== '') {
+  if (TOKEN !== '') {
     return true;
   } else {
     authService.successLogin.next();

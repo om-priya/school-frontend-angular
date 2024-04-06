@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeedbackService } from '../../services/feedback.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
+
+import { FeedbackService } from '../../services/feedback.service';
 
 @Component({
   selector: 'school-create-feedback',
@@ -23,15 +24,17 @@ export class CreateFeedbackComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // getting id from the URL
     this.user_id = this.route.snapshot.params['id'];
   }
 
-  giveFeedback(formData: NgForm) {
-    console.log(formData.value);
+  giveFeedback(formData: NgForm): void {
+    // subscribing to post the data to the backend
     this.giveFeedbackSubscriber = this.feedbackService
       .giveFeedback(formData.value, this.user_id)
       .subscribe({
         next: (responseData) => {
+          // to show toast in UI
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -40,6 +43,7 @@ export class CreateFeedbackComponent implements OnInit, OnDestroy {
           this.router.navigate(['teachers']);
         },
         error: (error) => {
+          // to show toast in UI
           this.messageService.add({
             severity: 'error',
             summary: 'Error',

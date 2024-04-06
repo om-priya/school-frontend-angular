@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FeedbackService, feedbackData } from '../../services/feedback.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
+
+import { FeedbackData } from '../../feedback.model';
+import { FeedbackService } from '../../services/feedback.service';
 
 @Component({
   selector: 'school-feedbacks-list',
@@ -10,13 +12,15 @@ import { MessageService } from 'primeng/api';
 })
 export class FeedbacksListComponent implements OnInit, OnDestroy {
   fetchFeedbackSubscriber: Subscription;
-  feedbacksData: feedbackData[];
+  feedbacksData: FeedbackData[];
 
   constructor(
     private feedbackService: FeedbackService,
     private messageService: MessageService
   ) {}
+
   ngOnInit(): void {
+    // subscribing get feedbacks for fetching the data
     this.fetchFeedbackSubscriber = this.feedbackService
       .getFeedbacks()
       .subscribe({
@@ -24,6 +28,7 @@ export class FeedbacksListComponent implements OnInit, OnDestroy {
           this.feedbacksData = resposeData.data.json;
         },
         error: (error) => {
+          // showing toast in frontend
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
@@ -32,6 +37,7 @@ export class FeedbacksListComponent implements OnInit, OnDestroy {
         },
       });
   }
+
   ngOnDestroy(): void {
     this.fetchFeedbackSubscriber?.unsubscribe();
   }
