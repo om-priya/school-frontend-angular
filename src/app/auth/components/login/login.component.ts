@@ -28,11 +28,11 @@ export class LoginComponent implements OnDestroy {
   }
 
   // Subscribing to the login service and setting session storage for the JWT
-  checkCredentials(formData: NgForm) {
+  checkCredentials(formData: NgForm): void {
     this.loginResponse = this.authService.login(formData.value).subscribe({
       next: (responseData) => {
         // accessing access_token from the response from backend
-        const jwt = responseData.data.json[0]['access_token'];
+        const JWT = responseData.data.json[0]['access_token'];
 
         // showing toast in the frontend
         this.messageService.add({
@@ -42,7 +42,7 @@ export class LoginComponent implements OnDestroy {
         });
 
         // after Math of successfull login
-        this.sessionService.setSessionStorage('jwt', jwt);
+        this.sessionService.setSessionStorage('jwt', JWT);
         this.authService.successLogin.next();
         this.router.navigate(['/']);
       },

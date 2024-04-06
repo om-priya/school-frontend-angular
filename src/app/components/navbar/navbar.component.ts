@@ -26,22 +26,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // fetching token from session storage and setting value for rendering
-    const token: string = this.storageService.getFromSessionStorage('jwt');
-    if (token !== '') {
-      this.isLoggedIn = true;
-      this.role = this.jwtService.getRoleFromToken(token);
-    }
+    this.fetchLoginStatusAndRole();
 
     // loginInSubscriber from the auth service to change the UI Whenever some tries to logIn
     this.logInSubscriber = this.authService.successLogin.subscribe(() => {
-      const token: string = this.storageService.getFromSessionStorage('jwt');
-      if (token !== '') {
-        this.isLoggedIn = true;
-        this.role = this.jwtService.getRoleFromToken(token);
-      } else {
-        this.isLoggedIn = false;
-      }
+      this.fetchLoginStatusAndRole();
     });
 
     // items list for rendering navbar of PrimeNg
@@ -57,12 +46,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ];
   }
 
+  // fetching token from session storage and setting value for rendering
+  fetchLoginStatusAndRole(): void {
+    const TOKEN: string = this.storageService.getFromSessionStorage('jwt');
+    if (TOKEN !== '') {
+      this.isLoggedIn = true;
+      this.role = this.jwtService.getRoleFromToken(TOKEN);
+    } else {
+      this.isLoggedIn = false;
+    }
+  }
+
   redirectToLogin(): void {
     this.router.navigate(['/auth/login']);
   }
 
   // clearing the session storage and setting the values to initial value
-  logoutMe() {
+  logoutMe(): void {
     sessionStorage.clear();
     this.isLoggedIn = false;
     this.router.navigate(['auth/login']);

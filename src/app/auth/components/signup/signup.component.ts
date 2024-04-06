@@ -37,7 +37,7 @@ export class SignupComponent implements OnDestroy {
   // Subscribing to the signing up of the user
   signUpUser(formData: NgForm) {
     // formatting data for the backend API
-    const newData = { ...formData.value };
+    let newData = { ...formData.value };
     newData.experience = newData.experience.toString();
 
     //Upon Successfull signUp navigate to /login

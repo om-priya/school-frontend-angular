@@ -23,7 +23,7 @@ export class CreateEventComponent implements OnDestroy {
   ) {}
 
   // subscribing to createEvent of event service
-  createEvent(formData: NgForm) {
+  createEvent(formData: NgForm): void {
     this.createEventSubscription = this.eventService
       .createEvent(formData.value)
       .subscribe({

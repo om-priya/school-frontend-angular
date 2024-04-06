@@ -34,7 +34,7 @@ export class EventsListComponent implements OnInit, OnDestroy {
   }
 
   // sunscribing to getEvents Service
-  fetchEvents() {
+  fetchEvents(): void {
     this.fetchEventDataSubscriber = this.eventService.getEvents().subscribe({
       next: (responseData) => {
         this.eventsData = responseData.data.json;
@@ -51,12 +51,12 @@ export class EventsListComponent implements OnInit, OnDestroy {
   }
 
   // function to show overlay
-  showDialog() {
+  showDialog(): void {
     this.visible = true;
   }
 
   // function to close overlay
-  closeDialog() {
+  closeDialog(): void {
     this.visible = false;
     this.fetchEvents();
   }
