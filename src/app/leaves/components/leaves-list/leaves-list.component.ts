@@ -1,14 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LeaveService, leave_data } from '../../services/leave.service';
 import { Subscription } from 'rxjs';
-import { JWTService } from '../../../services/jwtservice.service';
-import { SessionStorageService } from '../../../services/session-storage-service.service';
 import { MessageService } from 'primeng/api';
 
-interface Column {
-  field: string;
-  header: string;
-}
+import { LeaveData } from '../../leaves.model';
+import { LeaveService } from '../../services/leave.service';
+import { JWTService } from '../../../services/jwtservice.service';
+import { SessionStorageService } from '../../../services/session-storage-service.service';
 
 @Component({
   selector: 'school-leaves-list',
@@ -16,10 +13,9 @@ interface Column {
   styleUrl: './leaves-list.component.css',
 })
 export class LeavesListComponent implements OnInit, OnDestroy {
-  leavesData: leave_data[];
+  leavesData: LeaveData[];
   fetchLeaveSubscriber: Subscription;
   approveLeaveSubscriber: Subscription;
-  cols: Column[];
   role: string;
   visible: boolean = false;
 
@@ -30,6 +26,7 @@ export class LeavesListComponent implements OnInit, OnDestroy {
     private messageService: MessageService
   ) {}
 
+  // fetching data from the API
   ngOnInit(): void {
     this.fetchLeavesData();
 
@@ -38,11 +35,13 @@ export class LeavesListComponent implements OnInit, OnDestroy {
     );
   }
 
-  showDialog() {
+  // showing overlay for the form
+  showDialog(): void {
     this.visible = true;
   }
 
-  getSeverity(status: string) {
+  // showing the status style
+  getSeverity(status: string): string {
     switch (status) {
       case 'pending':
         return 'error';
@@ -52,7 +51,9 @@ export class LeavesListComponent implements OnInit, OnDestroy {
         return 'warning';
     }
   }
-  fetchLeavesData() {
+
+  // fetching the data by subscribing
+  fetchLeavesData(): void {
     this.fetchLeaveSubscriber = this.leaveService.getLeaves().subscribe({
       next: (responseData) => {
         this.leavesData = responseData.data.json;
@@ -68,7 +69,8 @@ export class LeavesListComponent implements OnInit, OnDestroy {
     });
   }
 
-  approveLeave(leaveId: string) {
+  // approving leave of the user
+  approveLeave(leaveId: string): void {
     this.approveLeaveSubscriber = this.leaveService
       .updateLeaveStatus(leaveId)
       .subscribe({
@@ -90,7 +92,8 @@ export class LeavesListComponent implements OnInit, OnDestroy {
       });
   }
 
-  closeDialog() {
+  // closing the overlay for thr form
+  closeDialog(): void {
     this.visible = false;
     this.fetchLeavesData();
   }

@@ -1,8 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { IssuesService } from '../../services/issues.service';
 import { MessageService } from 'primeng/api';
+
+import { IssuesService } from '../../services/issues.service';
 
 @Component({
   selector: 'school-create-issues',
@@ -19,11 +20,11 @@ export class CreateIssuesComponent implements OnDestroy {
   ) {}
 
   raiseIssue(formData: NgForm) {
-    console.log(formData.value);
     this.raiseIssueSubscription = this.issueService
       .raiseIssues(formData.value)
       .subscribe({
         next: (responseData) => {
+          // Showing toast and reseting the form
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -32,6 +33,7 @@ export class CreateIssuesComponent implements OnDestroy {
           formData.reset();
         },
         error: (error) => {
+          // showing toast in case of error
           this.messageService.add({
             severity: 'error',
             summary: 'Error',

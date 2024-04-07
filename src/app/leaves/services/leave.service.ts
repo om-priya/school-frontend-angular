@@ -1,21 +1,12 @@
-import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SuccessResponse } from '../../models/response.model';
-import { SessionStorageService } from '../../services/session-storage-service.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { HandleErrorService } from '../../services/handle-error.service';
 
-export type leave_data = {
-  leave_date: string;
-  leave_id: string;
-  no_of_days: number;
-  status: string;
-  username: string;
-};
-export type leaveData = {
-  leave_date: string;
-  no_of_day: string;
-};
+import { SuccessResponse } from '../../models/response.model';
+import { CreateLeaveData, LeaveData } from '../leaves.model';
+import { HandleErrorService } from '../../services/handle-error.service';
+import { environment } from '../../../environments/environment';
+
 @Injectable({ providedIn: 'root' })
 export class LeaveService {
   constructor(
@@ -23,27 +14,39 @@ export class LeaveService {
     private errorHandlerService: HandleErrorService
   ) {}
 
-  getLeaves() {
-    return this.http
-      .get<SuccessResponse<leave_data>>('http://localhost:5000/api/v1/leaves')
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  getLeaves(): Observable<SuccessResponse<LeaveData>> {
+    return (
+      this.http
+        .get<SuccessResponse<LeaveData>>(`${environment.apiUrlV1}leaves`)
+        // to handle error
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  applyForLeave(leaveData: leaveData) {
-    return this.http
-      .post<SuccessResponse<{}>>(
-        `http://localhost:5000/api/v1/leaves`,
-        leaveData
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  applyForLeave(leaveData: CreateLeaveData): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .post<SuccessResponse<void>>(`${environment.apiUrlV1}leaves`, leaveData)
+        // to handle error
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  updateLeaveStatus(leaveId: string) {
-    return this.http
-      .put<SuccessResponse<{}>>(
-        `http://localhost:5000/api/v1/leaves/${leaveId}`,
-        {}
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  updateLeaveStatus(leaveId: string): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .put<SuccessResponse<void>>(
+          `${environment.apiUrlV1}leaves/${leaveId}`,
+          {}
+        )
+        // to handle error
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 }

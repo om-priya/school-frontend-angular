@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
+// fetching data from token but have to change it based on Ajay sir feedback
 @Injectable({
   providedIn: 'root',
 })

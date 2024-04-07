@@ -3,11 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
-export interface ErrorResponse {
-  success: boolean;
-  err_message: string;
-  err_status_code: number;
-}
+import { ErrorResponse } from '../models/response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +11,7 @@ export interface ErrorResponse {
 export class HandleErrorService {
   constructor(private router: Router) {}
 
+  // HANDLE ERROR FUNCTION FOR THE PIPE IN HTTP CALLS
   handleError(errResponse: HttpErrorResponse) {
     const errorData: ErrorResponse = errResponse.error;
     switch (errorData.err_status_code) {

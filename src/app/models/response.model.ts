@@ -11,3 +11,9 @@ export interface SuccessResponse<T> {
     json: T[];
   };
 }
+
+export interface ErrorResponse {
+  success: boolean;
+  err_message: string;
+  err_status_code: number;
+}

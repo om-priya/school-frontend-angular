@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { LeaveService } from '../../services/leave.service';
 import { MessageService } from 'primeng/api';
+
+import { LeaveService } from '../../services/leave.service';
 
 @Component({
   selector: 'school-apply-leave',
@@ -21,14 +22,15 @@ export class ApplyLeaveComponent implements OnDestroy {
   ) {}
 
   applyForLeave(formData: NgForm) {
-    const formattedDate = this.date.toLocaleDateString('en-GB');
-    const newData = { ...formData.value };
+    // formatting data for the backend.
+    let formattedDate = this.date.toLocaleDateString('en-GB');
+    let newData = { ...formData.value };
     newData.leave_date = formattedDate.replaceAll('/', '-');
     newData.no_of_days = newData.no_of_days.toString();
-    console.log(newData);
 
     this.leaveService.applyForLeave(newData).subscribe({
       next: (responseData) => {
+        // showing the toast on success and emitting the event to update parent UI
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -37,6 +39,7 @@ export class ApplyLeaveComponent implements OnDestroy {
         this.onSuccessApplied.emit();
       },
       error: (error) => {
+        // error toast
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
