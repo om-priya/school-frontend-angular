@@ -7,8 +7,9 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { PrincipalService } from '../../services/principal.service';
 import { MessageService } from 'primeng/api';
+
+import { PrincipalService } from '../../services/principal.service';
 
 @Component({
   selector: 'school-principal-details-edit',
@@ -31,7 +32,7 @@ export class PrincipalDetailsEditComponent implements OnDestroy {
     private messageService: MessageService
   ) {}
 
-  updatePrincipal(formData: NgForm) {
+  updatePrincipal(formData: NgForm): void {
     this.updatePrincipalSubscriber = this.principalService
       .updatePrincipal(formData.value, this.user_id)
       .subscribe({

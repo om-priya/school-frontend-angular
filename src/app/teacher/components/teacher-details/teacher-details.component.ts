@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { TeacherService, teacherData } from '../../services/teacher.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+
+import { TeacherData } from '../../teacher.model';
+import { TeacherService } from '../../services/teacher.service';
 
 @Component({
   selector: 'school-teacher-details',
@@ -13,7 +15,7 @@ export class TeacherDetailsComponent implements OnInit, OnDestroy {
   fetchSingleRouteSubscriber: Subscription;
   deleteTeacherSubscriber: Subscription;
   approveTeacherSubscriber: Subscription;
-  teacherData: teacherData;
+  teacherData: TeacherData;
   visible: boolean = false;
 
   constructor(
@@ -22,21 +24,25 @@ export class TeacherDetailsComponent implements OnInit, OnDestroy {
     private teacherService: TeacherService,
     private messageService: MessageService
   ) {}
+
   ngOnInit(): void {
     this.fetchTeacher();
   }
 
-  navigateToCreateFeedback(user_id: string) {
+  navigateToCreateFeedback(user_id: string): void {
     this.router.navigate(['feedbacks', user_id, 'create']);
   }
 
-  showDialog() {
+  showDialog(): void {
     this.visible = true;
   }
-  closeDialog() {
+
+  closeDialog(): void {
     this.visible = false;
     this.fetchTeacher();
   }
+
+  // fetching teacher Info
   fetchTeacher() {
     const teacher_id = this.route.snapshot.params['id'];
     this.fetchSingleRouteSubscriber = this.teacherService
@@ -55,6 +61,7 @@ export class TeacherDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
+  // deleting teacher 
   deleteTeacher(teacher_id: string) {
     this.deleteTeacherSubscriber = this.teacherService
       .deleteTeacher(teacher_id)
@@ -77,6 +84,7 @@ export class TeacherDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Approving teacher for access to platform
   approveTeacher(teacher_id: string) {
     this.approveTeacherSubscriber = this.teacherService
       .approveTeacher(teacher_id)

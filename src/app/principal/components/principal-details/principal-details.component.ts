@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  PrincipalService,
-  principalData,
-} from '../../services/principal.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
+
+import { PrincipalService } from '../../services/principal.service';
+import { PrincipalData } from '../../principal.model';
 
 @Component({
   selector: 'school-principal-details',
@@ -16,7 +15,7 @@ export class PrincipalDetailsComponent implements OnInit, OnDestroy {
   fetchSingleRouteSubscriber: Subscription;
   deletePrincipalSubscriber: Subscription;
   approvePrincipalSubscriber: Subscription;
-  principalData: principalData;
+  principalData: PrincipalData;
   visible: boolean = false;
 
   constructor(
@@ -30,16 +29,17 @@ export class PrincipalDetailsComponent implements OnInit, OnDestroy {
     this.fetchPrincipal();
   }
 
-  showDialog() {
+  showDialog(): void {
     this.visible = true;
   }
 
-  closeDialog() {
+  closeDialog(): void {
     this.visible = false;
     this.fetchPrincipal();
   }
 
-  fetchPrincipal() {
+  // fetching principals data
+  fetchPrincipal(): void {
     const principal_id = this.route.snapshot.params['id'];
     this.fetchSingleRouteSubscriber = this.principalService
       .getSinglePrincipals(principal_id)
@@ -56,7 +56,9 @@ export class PrincipalDetailsComponent implements OnInit, OnDestroy {
         },
       });
   }
-  deletePrincipal(principal_id: string) {
+
+  // deleteing principal
+  deletePrincipal(principal_id: string): void {
     this.deletePrincipalSubscriber = this.principalService
       .deletePrincipal(principal_id)
       .subscribe({
@@ -78,7 +80,8 @@ export class PrincipalDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  approvePrincipal(principal_id: string) {
+  // approving principal
+  approvePrincipal(principal_id: string): void {
     this.approvePrincipalSubscriber = this.principalService
       .approvePrincipal(principal_id)
       .subscribe({

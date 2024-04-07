@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { isLoggedInGuard } from '../guards/is-logged-in.guard';
+import { onlySuperadminGuard } from '../guards/only-superadmin.guard';
 import { PrincipalListComponent } from './components/principal-list/principal-list.component';
 import { PrincipalDetailsComponent } from './components/principal-details/principal-details.component';
 import { PrincipalDetailsEditComponent } from './components/principal-details-edit/principal-details-edit.component';
-import { isLoggedInGuard } from '../guards/is-logged-in.guard';
-import { onlySuperadminGuard } from '../guards/only-superadmin.guard';
 
 const PRINCIPAL_ROUTES: Routes = [
   {

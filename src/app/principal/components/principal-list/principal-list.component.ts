@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import {
-  PrincipalService,
-  principalData,
-} from '../../services/principal.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+
+import { PrincipalData } from '../../principal.model';
+import { PrincipalService } from '../../services/principal.service';
 
 @Component({
   selector: 'school-principal-list',
@@ -14,7 +13,7 @@ import { MessageService } from 'primeng/api';
 })
 export class PrincipalListComponent implements OnInit, OnDestroy {
   fetchAllPrincipalsSubscriber: Subscription;
-  principalsData: principalData[];
+  principalsData: PrincipalData[];
 
   constructor(
     private principalService: PrincipalService,
@@ -39,7 +38,7 @@ export class PrincipalListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSeverity(status: string) {
+  getSeverity(status: string): string {
     switch (status) {
       case 'pending':
         return 'error';
@@ -50,7 +49,7 @@ export class PrincipalListComponent implements OnInit, OnDestroy {
     }
   }
 
-  redirectToSinglePrincipal(user_id: string) {
+  redirectToSinglePrincipal(user_id: string): void {
     this.router.navigate(['principals', user_id]);
   }
 

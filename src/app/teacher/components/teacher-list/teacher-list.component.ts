@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TeacherService, teacherData } from '../../services/teacher.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
+
+import { TeacherService } from '../../services/teacher.service';
+import { TeacherData } from '../../teacher.model';
 
 @Component({
   selector: 'school-teacher-list',
@@ -11,7 +13,7 @@ import { MessageService } from 'primeng/api';
 })
 export class TeacherListComponent implements OnInit, OnDestroy {
   fetchAllTeachersSubscriber: Subscription;
-  teachersData: teacherData[];
+  teachersData: TeacherData[];
 
   constructor(
     private teacherService: TeacherService,
@@ -19,6 +21,7 @@ export class TeacherListComponent implements OnInit, OnDestroy {
     private messageService: MessageService
   ) {}
 
+  // fetching data to showcase all teachers
   ngOnInit(): void {
     this.fetchAllTeachersSubscriber = this.teacherService
       .getAllTeachers()
@@ -36,7 +39,8 @@ export class TeacherListComponent implements OnInit, OnDestroy {
       });
   }
 
-  getSeverity(status: string) {
+  // for the status of the teacher for primeng styles
+  getSeverity(status: string): string {
     switch (status) {
       case 'pending':
         return 'error';
@@ -47,7 +51,7 @@ export class TeacherListComponent implements OnInit, OnDestroy {
     }
   }
 
-  redirectToSingleTeacher(user_id: string) {
+  redirectToSingleTeacher(user_id: string): void {
     this.router.navigate(['teachers', user_id]);
   }
 

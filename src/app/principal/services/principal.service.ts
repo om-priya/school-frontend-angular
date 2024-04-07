@@ -1,23 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SuccessResponse } from '../../models/response.model';
-import { SessionStorageService } from '../../services/session-storage-service.service';
-import { catchError } from 'rxjs';
-import { HandleErrorService } from '../../services/handle-error.service';
+import { Observable, catchError } from 'rxjs';
 
-export type principalData = {
-  email: string;
-  gender: string;
-  name: string;
-  status: string;
-  user_id: string;
-};
-export type updatedPrincipalData = {
-  email: string;
-  gender: string;
-  name: string;
-  phone: string;
-};
+import { SuccessResponse } from '../../models/response.model';
+import { HandleErrorService } from '../../services/handle-error.service';
+import { PrincipalData, UpdatedPrincipalData } from '../principal.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -28,44 +16,74 @@ export class PrincipalService {
     private errorHandlerService: HandleErrorService
   ) {}
 
-  getAllPrincipals() {
-    return this.http
-      .get<SuccessResponse<principalData>>(
-        'http://localhost:5000/api/v1/principals'
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  getAllPrincipals(): Observable<SuccessResponse<PrincipalData>> {
+    return (
+      this.http
+        .get<SuccessResponse<PrincipalData>>(
+          `${environment.apiUrlV1}principals`
+        )
+        // to handle http error handling
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  getSinglePrincipals(user_id: string) {
-    return this.http
-      .get<SuccessResponse<principalData>>(
-        `http://localhost:5000/api/v1/principals/${user_id}`
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  getSinglePrincipals(
+    user_id: string
+  ): Observable<SuccessResponse<PrincipalData>> {
+    return (
+      this.http
+        .get<SuccessResponse<PrincipalData>>(
+          `${environment.apiUrlV1}principals/${user_id}`
+        )
+        // to handle http error handling
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  deletePrincipal(user_id: string) {
-    return this.http
-      .delete<SuccessResponse<void>>(
-        `http://localhost:5000/api/v1/principals/${user_id}`
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  deletePrincipal(user_id: string): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .delete<SuccessResponse<void>>(
+          `${environment.apiUrlV1}principals/${user_id}`
+        )
+        // to handle http error handling
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  updatePrincipal(updatedData: updatedPrincipalData, user_id: string) {
-    return this.http
-      .put<SuccessResponse<void>>(
-        `http://localhost:5000/api/v1/principals/${user_id}`,
-        updatedData
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  updatePrincipal(
+    updatedData: UpdatedPrincipalData,
+    user_id: string
+  ): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .put<SuccessResponse<void>>(
+          `${environment.apiUrlV1}principals/${user_id}`,
+          updatedData
+        )
+        // to handle http error handling
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
-  approvePrincipal(user_id: string) {
-    return this.http
-      .put<SuccessResponse<void>>(
-        `http://localhost:5000/api/v1/principals/${user_id}/approve`,
-        {}
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  approvePrincipal(user_id: string): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .put<SuccessResponse<void>>(
+          `${environment.apiUrlV1}principals/${user_id}/approve`,
+          {}
+        )
+        // to handle http error handling
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 }

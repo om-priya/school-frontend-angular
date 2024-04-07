@@ -1,23 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SuccessResponse } from '../../models/response.model';
-import { SessionStorageService } from '../../services/session-storage-service.service';
-import { catchError } from 'rxjs';
-import { HandleErrorService } from '../../services/handle-error.service';
+import { Observable, catchError } from 'rxjs';
 
-export type teacherData = {
-  email: string;
-  gender: string;
-  name: string;
-  status: string;
-  user_id: string;
-};
-export type updatedTeacherData = {
-  email: string;
-  gender: string;
-  name: string;
-  phone: string;
-};
+import { TeacherData, UpdatedTeacherData } from '../teacher.model';
+import { SuccessResponse } from '../../models/response.model';
+import { HandleErrorService } from '../../services/handle-error.service';
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -27,45 +16,71 @@ export class TeacherService {
     private errorHandlerService: HandleErrorService
   ) {}
 
-  getAllTeachers() {
-    return this.http
-      .get<SuccessResponse<teacherData>>(
-        'http://localhost:5000/api/v1/teachers'
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  getAllTeachers(): Observable<SuccessResponse<TeacherData>> {
+    return (
+      this.http
+        .get<SuccessResponse<TeacherData>>(`${environment.apiUrlV1}teachers`)
+        // to handle error of http request
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  getSingleTeacher(user_id: string) {
-    return this.http
-      .get<SuccessResponse<teacherData>>(
-        `http://localhost:5000/api/v1/teachers/${user_id}`
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  getSingleTeacher(user_id: string): Observable<SuccessResponse<TeacherData>> {
+    return (
+      this.http
+        .get<SuccessResponse<TeacherData>>(
+          `${environment.apiUrlV1}teachers/${user_id}`
+        )
+        // to handle error of http request
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  updateTeacher(updatedData: updatedTeacherData, user_id: string) {
-    return this.http
-      .put<SuccessResponse<void>>(
-        `http://localhost:5000/api/v1/teachers/${user_id}`,
-        updatedData
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  updateTeacher(
+    updatedData: UpdatedTeacherData,
+    user_id: string
+  ): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .put<SuccessResponse<void>>(
+          `${environment.apiUrlV1}teachers/${user_id}`,
+          updatedData
+        )
+        // to handle error of http request
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  deleteTeacher(user_id: string) {
-    return this.http
-      .delete<SuccessResponse<void>>(
-        `http://localhost:5000/api/v1/teachers/${user_id}`
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  deleteTeacher(user_id: string): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .delete<SuccessResponse<void>>(
+          `${environment.apiUrlV1}teachers/${user_id}`
+        )
+        // to handle error of http request
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 
-  approveTeacher(user_id: string) {
-    return this.http
-      .put<SuccessResponse<void>>(
-        `http://localhost:5000/api/v1/teachers/${user_id}/approve`,
-        {}
-      )
-      .pipe(catchError((error) => this.errorHandlerService.handleError(error)));
+  approveTeacher(user_id: string): Observable<SuccessResponse<void>> {
+    return (
+      this.http
+        .put<SuccessResponse<void>>(
+          `${environment.apiUrlV1}teachers/${user_id}/approve`,
+          {}
+        )
+        // to handle error of http request
+        .pipe(
+          catchError((error) => this.errorHandlerService.handleError(error))
+        )
+    );
   }
 }
