@@ -32,7 +32,7 @@ export class HandleErrorService {
       case 500:
         return throwError(errorData.err_message);
       default:
-        return throwError('Crazy things Happening');
+        return throwError('Backend Failed');
     }
   }
 }
